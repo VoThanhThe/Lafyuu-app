@@ -66,6 +66,10 @@ const Gender = (props) => {
                 
 
             </View>
+
+            <TouchableOpacity style={styles.buttonSave}>
+                <Text style={styles.textButtonSave}>Save</Text>
+            </TouchableOpacity>
         </View>
     )
 }
@@ -133,6 +137,24 @@ const styles = StyleSheet.create({
         borderColor: '#EBF0FF',
         borderRadius: 5,
 
+    },
+    buttonSave: {
+        position: 'absolute',
+        bottom: 10,
+        right: 16,
+        left: 16,
+        height: 57,
+        backgroundColor: '#40BFFF',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 5,
+        marginVertical: 16,
+    },
+    textButtonSave: {
+        fontSize: 14,
+        fontWeight: '700',
+        lineHeight: 25.2,
+        color: "#ffffff",
     },
 
 

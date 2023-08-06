@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import Icon1 from 'react-native-vector-icons/Feather'
 import Icon2 from 'react-native-vector-icons/Ionicons'
 import ItemProduct from '../item_screen/ItemProduct'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 const dataProduct = [
 
@@ -81,7 +82,7 @@ const dataProduct = [
     },
 
 ]
-const Offer = ( props) => {
+const Offer = (props) => {
     const { navigation } = props;
     return (
 
@@ -89,7 +90,9 @@ const Offer = ( props) => {
             {/* Start Header */}
             <View style={styles.groupHeader}>
                 <View style={{ flexDirection: 'row' }}>
-                    <Icon2 name="chevron-back" color="#9098B1" size={20} />
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <Icon2 name="chevron-back" color="#9098B1" size={20} />
+                    </TouchableOpacity>
                     <Text style={styles.textHeader}>Super Flash Sale</Text>
                 </View>
                 <Icon name="search" color="#9098B1" size={20} />
@@ -98,20 +101,23 @@ const Offer = ( props) => {
             {/* End Header */}
             <ScrollView showsVerticalScrollIndicator={false}>
 
-                <View style={{ padding: 16 }}>
+                <View style={{ padding: 16, flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
                     {/* Bannel */}
                     <Image style={styles.image} source={require('../assets/img_bannel.png')} />
 
                     {/* Bannel 1 */}
 
-                    <FlatList style={{ marginVertical: 12 }}
+                    {/* <FlatList style={{ marginVertical: 12 }}
                         numColumns={2}
                         data={dataProduct}
                         renderItem={({ item }) => <ItemProduct dataProduct={item} />}
                         keyExtractor={item => item.id}
                         showsHorizontalScrollIndicator={false}
                         showsVerticalScrollIndicator={false}
-                    />
+                    /> */}
+                    {
+                        dataProduct.map((item) => <ItemProduct key={item.id} dataProduct={item} navigation={navigation} />)
+                    }
                 </View>
             </ScrollView>
         </View>

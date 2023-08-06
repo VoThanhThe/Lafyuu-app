@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 const BirthDay = (props) => {
     const [birthday, setbirthday] = useState("23/04/2003");
-    const {navigation} = props;
+    const { navigation } = props;
     return (
         <View style={styles.container}>
             {/* Start Header */}
@@ -24,10 +24,15 @@ const BirthDay = (props) => {
             <View style={{ padding: 16 }}>
                 <Text style={styles.textItem}>Your Birhday</Text>
                 <View style={styles.inputHeader} >
-                    <TextInput style={[styles.input]} onChangeText={setbirthday} value={birthday}/>
+                    <TextInput style={[styles.input]} onChangeText={setbirthday} value={birthday} />
                     <Ionicons style={styles.icon} name="calendar-sharp" color="#9098B1" size={20} />
                 </View>
+
+
             </View>
+            <TouchableOpacity style={styles.buttonSave}>
+                <Text style={styles.textButtonSave}>Save</Text>
+            </TouchableOpacity>
         </View>
     )
 }
@@ -86,7 +91,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#EBF0FF',
         marginBottom: 24,
-       
+
     },
     icon: {
         position: 'absolute',
@@ -96,6 +101,24 @@ const styles = StyleSheet.create({
     inputHeader: {
         position: 'relative',
         marginTop: 8
+    },
+    buttonSave: {
+        position: 'absolute',
+        bottom: 10,
+        right: 16,
+        left: 16,
+        height: 57,
+        backgroundColor: '#40BFFF',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 5,
+        marginVertical: 16,
+    },
+    textButtonSave: {
+        fontSize: 14,
+        fontWeight: '700',
+        lineHeight: 25.2,
+        color: "#ffffff",
     },
 
 

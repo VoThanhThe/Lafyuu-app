@@ -93,25 +93,23 @@ const FavoriteProduct = (props) => {
             {/* Start Header */}
             <View style={styles.groupHeader}>
                 <View style={{ flexDirection: 'row' }}>
-                    <TouchableOpacity onPress={() => {navigation.goBack()}}>
+                    <TouchableOpacity onPress={() => { navigation.goBack() }}>
                         <Icon2 name="chevron-back" color="#9098B1" size={20} />
                     </TouchableOpacity>
                     <Text style={styles.textHeader}>Favorite Product</Text>
                 </View>
             </View>
             {/* End Header */}
-            <ScrollView showsVerticalScrollIndicator={false}>
-                <View style={{ padding: 16 }}>
-                    <FlatList
-                        numColumns={2}
-                        data={dataProduct}
-                        renderItem={({ item }) => <ItemFavoriteProduct dataProduct={item} />}
-                        keyExtractor={item => item.id}
-                        showsHorizontalScrollIndicator={false}
-                        showsVerticalScrollIndicator={false}
-                    />
-                </View>
-            </ScrollView>
+            <View style={{ padding: 16 }}>
+                <FlatList
+                    numColumns={2}
+                    data={dataProduct}
+                    renderItem={({ item }) => <ItemFavoriteProduct dataProduct={item} />}
+                    keyExtractor={item => item.id}
+                    showsHorizontalScrollIndicator={false}
+                    showsVerticalScrollIndicator={false}
+                />
+            </View>
         </View>
 
     )

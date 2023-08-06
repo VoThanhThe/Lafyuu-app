@@ -28,6 +28,10 @@ const Email = (props) => {
                 </View>
                 <Text style={styles.textbottom}>We Will Send verification to your New Email</Text>
             </View>
+
+            <TouchableOpacity style={styles.buttonSave}>
+                <Text style={styles.textButtonSave}>Save</Text>
+            </TouchableOpacity>
         </View>
   )
 }
@@ -104,6 +108,24 @@ const styles = StyleSheet.create({
         color: '#40BFFF',
         textAlign: 'left',
         marginTop: 8
-    }
+    },
+    buttonSave: {
+        position: 'absolute',
+        bottom: 10,
+        right: 16,
+        left: 16,
+        height: 57,
+        backgroundColor: '#40BFFF',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 5,
+        marginVertical: 16,
+    },
+    textButtonSave: {
+        fontSize: 14,
+        fontWeight: '700',
+        lineHeight: 25.2,
+        color: "#ffffff",
+    },
 
 })

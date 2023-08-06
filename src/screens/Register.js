@@ -56,8 +56,10 @@ const Register = (props) => {
     } else if (email.length > 0) {
       if (validaPassword(password)) {
         setErrPassword('');
-      } else {
+      } else if(password.length < 8 && password.length > 20) {
         setErrPassword('Mật khẩu từ 8 đến 20 kí tự');
+      }else {
+        setErrPassword('Mật khẩu gồm chữ viết hoa, viết thường và số');
       }
     }
 
