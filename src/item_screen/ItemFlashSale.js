@@ -2,16 +2,16 @@ import { StyleSheet, Text, View,Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 
 const ItemFlashSale = (props) => {
-    const {dataSale, navigation} = props;
+    const {data, navigation} = props;
   return (
     <TouchableOpacity style = {styles.container}
-    onPress={() => navigation.navigate('ProductDetail')}> 
-      <Image style = {styles.image} source={{uri : dataSale.imageURL}}/>
-      <Text style = {styles.title}>{dataSale.title}</Text>
-      <Text style = {styles.priceNew}>{dataSale.priceNew}</Text>
+    onPress={() => navigation.navigate('ProductDetail', {data})}> 
+      <Image style = {styles.image} source={{uri : data.imageURL}}/>
+      <Text style = {styles.title}>{data.title}</Text>
+      <Text style = {styles.priceNew}>${data.priceNew}</Text>
       <View style = {styles.groupView}>
-        <Text style = {styles.priceOld}>{dataSale.priceOld}</Text>
-        <Text style = {styles.sale}>{dataSale.sale}</Text>
+        <Text style = {styles.priceOld}>{data.priceOld}</Text>
+        <Text style = {styles.sale}>{data.sale}</Text>
       </View>
     </TouchableOpacity>
   )

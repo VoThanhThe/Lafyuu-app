@@ -73,7 +73,7 @@ const Register = (props) => {
       }
     }
 
-    if (errName.length == 0 && errEmail.length == 0 && errPassword.length == 0 && errPasswordAgain.length == 0) {
+    if (validaEmail(email) && name.length > 0 && validaPassword(password) &&  validaPassword(passwordAgain)) {
       console.log(result);
       navigation.navigate('Login');
     }
@@ -118,7 +118,7 @@ const Register = (props) => {
       </View>
       <Text style={{ color: 'red', fontSize: 16 }}>{errPasswordAgain}</Text>
 
-      <Pressable
+      <TouchableOpacity
         style={styles.button}
         // onPress={() => {
         //   navigation.navigate('Login');
@@ -126,7 +126,7 @@ const Register = (props) => {
         onPress={subMit}
       >
         <Text style={styles.textButton}>Sign Up</Text>
-      </Pressable>
+      </TouchableOpacity>
 
       <View style={styles.viewFooter}>
         <Text style={styles.textFooter}>have a account? </Text>

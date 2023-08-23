@@ -6,13 +6,13 @@ import Icon2 from 'react-native-vector-icons/Ionicons'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
 const ItemProduct = (props) => {
-    const { dataProduct, navigation } = props;
+    const { data, navigation } = props;
     return (
         <View style={styles.container}>
             <TouchableOpacity
-                onPress={() => navigation.navigate("ProductDetail")}>
-                <Image style={styles.image} source={{ uri: dataProduct.imageURL }} />
-                <Text style={styles.title}>{dataProduct.title}</Text>
+                onPress={() => navigation.navigate("ProductDetail", {data})}>
+                <Image style={styles.image} source={{ uri: data.imageURL }} />
+                <Text style={styles.title}>{data.title}</Text>
                 <View style={styles.groupView}>
                     <Icon style={styles.icon} name="star" color="#FFC833" size={12} />
                     <Icon style={styles.icon} name="star" color="#FFC833" size={12} />
@@ -20,10 +20,10 @@ const ItemProduct = (props) => {
                     <Icon style={styles.icon} name="star" color="#FFC833" size={12} />
                     <Icon style={styles.icon} name="star" color="#EBF0FF" size={12} />
                 </View>
-                <Text style={styles.priceNew}>{dataProduct.priceNew}</Text>
+                <Text style={styles.priceNew}>${data.priceNew}</Text>
                 <View style={styles.groupView}>
-                    <Text style={styles.priceOld}>{dataProduct.priceOld}</Text>
-                    <Text style={styles.sale}>{dataProduct.sale}</Text>
+                    <Text style={styles.priceOld}>{data.priceOld}</Text>
+                    <Text style={styles.sale}>{data.sale}</Text>
                 </View>
             </TouchableOpacity>
         </View>

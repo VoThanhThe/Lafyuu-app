@@ -1,10 +1,42 @@
-import { StyleSheet, Text, View, Image, TextInput, FlatList, Pressable, ScrollView, TouchableOpacity } from 'react-native'
-import React from 'react'
+import {
+    StyleSheet,
+    Text,
+    View,
+    Image,
+    TextInput,
+    FlatList,
+    Pressable,
+    ScrollView,
+    TouchableOpacity
+} from 'react-native'
+import React, { useState } from 'react'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Feather from 'react-native-vector-icons/Feather'
 import Icon2 from 'react-native-vector-icons/Ionicons'
+import ItemCart from '../item_screen/ItemCart'
+import { useSelector } from 'react-redux'
 
 const Cart = () => {
+    const [quantityProduct, setQuantityProduct] = useState(0);
+    const [totalPrice, setTotalPrice] = useState(0);
+    const [ship, setShip] = useState(40.00);
+    const [importChange, setImportChange] = useState(128.00);
+
+
+    const cartData = useSelector(state => state.Reducers);
+    console.log("Data List: ", cartData);
+    console.log("Data length: ", cartData.length);
+    var tong = 0;
+    const sumPrice = (cartData) => {
+        for (let index = 0; index < cartData.length; index++) {
+            tong += cartData[index].priceNew;
+        }
+        return tong;
+    }
+    
+    
+    //set data
+    // setQuantityProduct(cartData.length);
     return (
         <View style={styles.container}>
             {/* Start Header */}
@@ -14,7 +46,11 @@ const Cart = () => {
             {/* End Header */}
             <ScrollView showsHorizontalScrollIndicator={false}>
                 <View style={{ paddingHorizontal: 16 }}>
-                    <View style={styles.group_card}>
+                    {
+                        cartData.map((item) => <ItemCart key={item.id} data={item} />)
+                    }
+
+                    {/* <View style={styles.group_card}>
                         <Image style={styles.image} source={require('../assets/product_1.png')} />
                         <View style={styles.group_right}>
                             <View style={styles.group_right_up}>
@@ -70,7 +106,7 @@ const Cart = () => {
                                 </View>
                             </View>
                         </View>
-                    </View>
+                    </View> */}
 
                     <View style={styles.inputHeader}>
                         <TextInput style={styles.input} placeholder='Enter Cupon Code' />
@@ -81,8 +117,8 @@ const Cart = () => {
 
                     <View style={{ padding: 16, borderWidth: 1, borderColor: '#EBF0FF', borderRadius: 5, marginTop: 16 }}>
                         <View style={[styles.viewFlex, { marginBottom: 12 }]}>
-                            <Text style={styles.textItemLeft}>Items (3)</Text>
-                            <Text style={styles.textItemRight}>$598.86</Text>
+                            <Text style={styles.textItemLeft}>Items ({cartData.length})</Text>
+                            <Text style={styles.textItemRight}>${sumPrice(cartData)}</Text>
                         </View>
                         <View style={[styles.viewFlex, { marginBottom: 12 }]}>
                             <Text style={styles.textItemLeft}>Shipping</Text>

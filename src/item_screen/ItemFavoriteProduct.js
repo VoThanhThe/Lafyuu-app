@@ -17,7 +17,7 @@ const ItemFavoriteProduct = (props) => {
                 <Icon style={styles.icon} name="star" color="#FFC833" size={12} />
                 <Icon style={styles.icon} name="star" color="#EBF0FF" size={12} />
             </View>
-            <Text style={styles.priceNew}>{dataProduct.priceNew}</Text>
+            <Text style={styles.priceNew}>${dataProduct.priceNew}</Text>
             <View style={styles.groupBottom}>
                 <View style={{flexDirection: 'row',
                             alignItems: 'center',}}>

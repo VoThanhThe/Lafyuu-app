@@ -37,9 +37,13 @@ import CreaditCardAndDebit from '../screens/CreaditCardAndDebit';
 import Notification_Offer from '../screens/Notification_Offer';
 import Notification_Feed from '../screens/Notification_Feed';
 import Notification_Activity from '../screens/Notification_Activity';
+import { useSelector } from 'react-redux';
+
+
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
+// const data = useSelector(state => state);
 
 const User = () => {
   return (
@@ -153,7 +157,7 @@ const BottomTab = () => {
 };
 const AppNavigator = () => {
   const {isLogin} = useContext(AppContext);
-  return <>{isLogin == false ? <User /> : <BottomTab />}</>;
+  return <>{isLogin == true ? <User /> : <BottomTab />}</>;
 };
 
 export default AppNavigator;

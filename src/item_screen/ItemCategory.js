@@ -2,15 +2,15 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 
 const ItemCategory = (props) => {
-  const {dataIcon, navigation} = props;
+  const {data, navigation} = props;
 
   return (
     <TouchableOpacity style = {styles.cotainer} 
     onPress={() => navigation.navigate('ProductDetail')}>
       <View style = {styles.circle}>
-        <Image style = {styles.image} resizeMode='contain' source={{uri : dataIcon.imageURL}} />
+        <Image style = {styles.image} resizeMode='contain' source={{uri : data.imageURL}} />
       </View>
-      <Text style = {styles.name}>{dataIcon.title}</Text>
+      <Text style = {styles.name}>{data.title}</Text>
     </TouchableOpacity>
   )
 }

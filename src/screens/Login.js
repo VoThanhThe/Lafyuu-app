@@ -11,7 +11,9 @@ import React, { useContext, useState } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon1 from 'react-native-vector-icons/Feather';
 import { AppContext } from '../ultil/AppContext';
-import { validaEmpty, validaEmail, validaPassword } from "../constants/validation"
+import { validaEmpty, validaEmail, validaPassword } from "../constants/validation";
+import { users } from "../data/Data";
+import { ToastAndroid } from 'react-native';
 
 
 const Login = props => {
@@ -28,30 +30,31 @@ const Login = props => {
       emai: email,
       password: password,
     }
-    if(email.length == 0){
+    if (email.length == 0) {
       setErrEmail('Không được bỏ trống.');
-    }else if(email.length > 0){
-      if(validaEmail(email)){
+    } else if (email.length > 0) {
+      if (validaEmail(email)) {
         setErrEmail('');
-      }else{
+      } else {
         setErrEmail('Sai định dạng email');
       }
     }
 
-    if(password.length == 0){
+    if (password.length == 0) {
       setErrPassword('Không được bỏ trống.');
-    }else if(email.length > 0){
-      if(validaPassword(password)){
+    } else if (email.length > 0) {
+      if (validaPassword(password)) {
         setErrPassword('');
-      }else{
-        setErrPassword('Mật khẩu từ 8 đến 20 kí tự');
+      } else {
+        setErrPassword('Mật khẩu gồm chữ hoa, chữ thường, chữ số và từ 8 đến 20 kí tự');
       }
     }
-    if(errEmail.length == 0 && errPassword.length == 0){
+
+    if (validaEmail(email) && validaPassword(password)) {
       console.log(result);
       setisLogin(true);
     }
-    
+
   };
   return (
     <View style={styles.container}>
@@ -61,22 +64,22 @@ const Login = props => {
       <Text style={styles.header}>Welcome to Lafyuu</Text>
       <Text style={styles.content}>Sign in to continue</Text>
       <View style={styles.inputHeader}>
-        <TextInput style={styles.input} placeholder="Your Email" 
-        onChangeText={(email) => setEmail(email)} />
+        <TextInput style={styles.input} placeholder="Your Email"
+          onChangeText={(email) => setEmail(email)} />
         <Icon style={styles.icon} name="envelope-o" color="#9098B1" size={20} />
       </View>
-      <Text style={{color: 'red', fontSize: 16}}>{errEmail}</Text>
+      <Text style={{ color: 'red', fontSize: 16 }}>{errEmail}</Text>
 
       <View style={styles.inputHeader}>
-        <TextInput style={styles.input} placeholder="Password" secureTextEntry = {true} 
-        onChangeText={(password) => setPassword(password)}/>
+        <TextInput style={styles.input} placeholder="Password" secureTextEntry={true}
+          onChangeText={(password) => setPassword(password)} />
         <Icon1 style={styles.icon} name="lock" color="#9098B1" size={20} />
       </View>
-      <Text style={{color: 'red', fontSize: 16}}>{errPassword}</Text>
-      
-      <Pressable style={styles.button} onPress={click}>
+      <Text style={{ color: 'red', fontSize: 16 }}>{errPassword}</Text>
+
+      <TouchableOpacity style={styles.button} onPress={click}>
         <Text style={styles.textButton}>Sign In</Text>
-      </Pressable>
+      </TouchableOpacity>
 
       <Text
         style={[

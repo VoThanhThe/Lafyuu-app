@@ -1,6 +1,6 @@
-import {StyleSheet, Text, View} from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 
 import SplashScreen from './src/screens/SplashScreen';
 import Login from './src/screens/Login';
@@ -19,7 +19,7 @@ import Cart from './src/screens/Cart';
 import OfferScreen from './src/screens/OfferScreen';
 import Account from './src/screens/Account';
 import AppNavigator from './src/ultil/AppNavigator';
-import {AppContextProvider} from './src/ultil/AppContext';
+import { AppContextProvider } from './src/ultil/AppContext';
 import Profile from './src/screens/Profile';
 import Change_Name from './src/screens/Change_Name';
 import Gender from './src/screens/Gender';
@@ -40,13 +40,21 @@ import Add_Card from './src/screens/Add_Card';
 import CategoryScreen from './Demo/CategoryScreen';
 import ItemColor from './Demo/ItemColor';
 
+import { Provider } from 'react-redux';
+// import {store} from './src/redux2/stores/Stores';
+import {store} from './src/redux2/stores/Stores';
+import ItemCart from './src/item_screen/ItemCart';
+
 const App = () => {
   return (
-    <AppContextProvider>
-      <NavigationContainer>
-        <AppNavigator />
-      </NavigationContainer>
-    </AppContextProvider>
+    <Provider store={store}>
+      <AppContextProvider>
+        <NavigationContainer>
+          <AppNavigator />
+        </NavigationContainer>
+      </AppContextProvider>
+      {/* <ItemCart/> */}
+    </Provider>
   );
 };
 

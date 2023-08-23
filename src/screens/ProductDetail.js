@@ -1,11 +1,18 @@
-import { StyleSheet, Text, View, ScrollView, TextInput, Image, FlatList, Button, Pressable, TouchableOpacity } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View, ScrollView, TextInput, Image, FlatList, Button, Pressable, TouchableOpacity, ToastAndroid } from 'react-native'
+import React, { useState, useEffect } from 'react'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Icon1 from 'react-native-vector-icons/Feather'
 import Icon2 from 'react-native-vector-icons/Ionicons'
 import ItemSize from '../item_screen/ItemSize'
 import ItemColor from '../item_screen/ItemColor'
 import ItemFlashSale from '../item_screen/ItemFlashSale'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  addItemToCart,
+  addToWishlist,
+  removeFromCart,
+  removeFromWishlist
+} from '../redux2/actions/Actions'
 
 const dataSize = [
   {
@@ -158,7 +165,14 @@ const dataColor = [
 
 ]
 const ProductDetail = (props) => {
-  const {navigation} = props;
+  const { navigation, route } = props;
+  const { params } = route;
+  const { data } = params;
+
+  const dispatch = useDispatch();
+
+  const items = useSelector(state => state);
+  console.log(items);
   return (
 
     <View style={styles.container}>
@@ -180,7 +194,7 @@ const ProductDetail = (props) => {
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Image Detail */}
 
-        <Image style={styles.image} source={require('../assets/img_detail_product.png')} />
+        <Image style={styles.image} resizeMode='cover' source={{ uri: data.imageURL }} />
         <View style={{ justifyContent: 'center', alignItems: 'center', padding: 16 }}>
           <View style={styles.groupButton}>
             <Text style={styles.buttonBannel}></Text>
@@ -194,8 +208,10 @@ const ProductDetail = (props) => {
         <View style={{ paddingHorizontal: 16 }}>
           {/* Start Title */}
           <View style={styles.groupTitle}>
-            <Text style={styles.title}>Nike Air Zoom Pegasus 36 Miami</Text>
-            <Icon1 name="heart" color="#9098B1" size={18} />
+            <Text style={styles.title}>{data.title}</Text>
+            <TouchableOpacity onPress={() => dispatch(addToWishlist(data))}>
+              <Icon1 name="heart" color="#9098B1" size={18} />
+            </TouchableOpacity>
           </View>
           {/* End Title */}
 
@@ -210,7 +226,7 @@ const ProductDetail = (props) => {
           {/* 5 Star */}
 
           {/* Price */}
-          <Text style={styles.price}>$299,43</Text>
+          <Text style={styles.price}>${data.priceNew}</Text>
           {/* Price */}
 
           {/* Select Size */}
@@ -305,16 +321,18 @@ const ProductDetail = (props) => {
           <Text style={styles.titleItem}>You Might Also Like</Text>
           <FlatList style={{ marginVertical: 12 }}
             data={dataFlashSale}
-            renderItem={({ item }) => <ItemFlashSale dataSale={item} />}
+            renderItem={({ item }) => <ItemFlashSale data={item} navigation={navigation} />}
             keyExtractor={item => item.id}
             horizontal={true}
             showsHorizontalScrollIndicator={false}
           />
           {/* You Might Also Like */}
 
-          <Pressable style={styles.button}>
+          <TouchableOpacity style={styles.button}
+            onPress={() => dispatch(addItemToCart(data))}
+          >
             <Text style={styles.textButton}>Add To Cart</Text>
-          </Pressable>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </View >
