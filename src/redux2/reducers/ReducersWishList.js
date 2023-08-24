@@ -1,4 +1,4 @@
-import { ADD_TO_CART, REMOVE_FROM_CART, REMOVE_FROM_WISHLIST, ADD_TO_WISHLIST } from "../ActionTypes";
+import { REMOVE_FROM_WISHLIST, ADD_TO_WISHLIST } from "../ActionTypes";
 
 
 export const ReducersWishlist = (state = [], action) => {

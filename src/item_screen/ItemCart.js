@@ -1,22 +1,41 @@
 import { StyleSheet, Text, View, Image, TextInput, FlatList, Pressable, ScrollView, TouchableOpacity } from 'react-native'
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Feather from 'react-native-vector-icons/Feather'
-import Icon2 from 'react-native-vector-icons/Ionicons'
+import { useDispatch } from 'react-redux'
+
+import {
+    removeFromCart,
+    addToWishlist,
+} from '../redux2/actions/Actions'
 
 const ItemCart = (props) => {
-    const {data} = props;
+    const dispatch = useDispatch();
+    const { data, index } = props;
+    const [isAddWishlist, setIsAddWishlist] = useState(false);
     var number = 1;
     const [quantity, setQuantity] = useState(number);
     return (
         <View style={styles.container}>
             <View style={styles.group_card}>
-                <Image style={styles.image} source={{uri: data.imageURL}} />
+                <Image style={styles.image} source={{ uri: data.imageURL }} />
                 <View style={styles.group_right}>
                     <View style={styles.group_right_up}>
                         <Text style={styles.textName}>{data.title}</Text>
-                        <Feather name="heart" color="#9098B1" size={20} />
-                        <FontAwesome style={styles.icon} name="trash-o" color="#9098B1" size={20} />
+                        <TouchableOpacity onPress={() => { setIsAddWishlist(true), dispatch(addToWishlist(data)) }}>
+                            {
+                                !isAddWishlist ?
+                                    (
+                                        <Feather name="heart" color="#9098B1" size={18} />
+                                    ) :
+                                    (
+                                        <FontAwesome name="heart" color="red" size={18} />
+                                    )
+                            }
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => dispatch(removeFromCart(index))}>
+                            <FontAwesome style={styles.icon} name="trash-o" color="#9098B1" size={20} />
+                        </TouchableOpacity>
                     </View>
                     <View style={styles.group_right_down}>
                         <Text style={styles.textPrice}>${data.priceNew}</Text>

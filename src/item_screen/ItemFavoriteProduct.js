@@ -1,14 +1,45 @@
-import { StyleSheet, Text, View, Image } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View, Image, TouchableOpacity, Alert } from 'react-native'
+import React, {useState} from 'react'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Icon1 from 'react-native-vector-icons/Feather'
 import Icon2 from 'react-native-vector-icons/Ionicons'
+import { useDispatch } from 'react-redux';
+import {
+    addToWishlist,
+    removeFromWishlist
+  } from '../redux2/actions/Actions'
 
 const ItemFavoriteProduct = (props) => {
-    const { dataProduct } = props;
+    const { dataProduct, index } = props;
+    const dispatch = useDispatch();
+    const [showBox, setShowBox] = useState(true);
+
+    const showConfirmDialog = () => {
+    return Alert.alert(
+      "Are your sure?",
+      "Are you sure you want to remove this wishlist?",
+      [
+        // The "Yes" button
+        {
+          text: "Yes",
+          onPress: () => (
+            // setShowBox(false)
+            dispatch(removeFromWishlist(index))
+            
+          )
+        },
+        // The "No" button
+        // Does nothing but dismiss the dialog when tapped
+        {
+          text: "No",
+        },
+      ]
+    );
+  };
+
     return (
         <View style={styles.container}>
-            <Image style={styles.image} source={{uri : dataProduct.imageURL}} />
+            <Image style={styles.image} source={{ uri: dataProduct.imageURL }} />
             <Text style={styles.title}>{dataProduct.title}</Text>
             <View style={styles.groupView}>
                 <Icon style={styles.icon} name="star" color="#FFC833" size={12} />
@@ -19,13 +50,16 @@ const ItemFavoriteProduct = (props) => {
             </View>
             <Text style={styles.priceNew}>${dataProduct.priceNew}</Text>
             <View style={styles.groupBottom}>
-                <View style={{flexDirection: 'row',
-                            alignItems: 'center',}}>
-                <Text style={styles.priceOld}>{dataProduct.priceOld}</Text>
-                <Text style={styles.sale}>{dataProduct.sale}</Text>
+                <View style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                }}>
+                    <Text style={styles.priceOld}>{dataProduct.priceOld}</Text>
+                    <Text style={styles.sale}>{dataProduct.sale}</Text>
                 </View>
-                <Icon style={styles.icon} name="trash-o" color="#9098B1" size={20} />
-
+                <TouchableOpacity onPress={() => showConfirmDialog()}>
+                    <Icon style={styles.icon} name="trash-o" color="#9098B1" size={20} />
+                </TouchableOpacity>
             </View>
         </View>
     )
@@ -60,7 +94,7 @@ const styles = StyleSheet.create({
         borderColor: '#EBF0FF',
         marginEnd: 16,
         marginBottom: 16
-        
+
     },
     image: {
         width: "100%",

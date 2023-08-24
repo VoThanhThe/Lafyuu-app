@@ -14,24 +14,25 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Feather from 'react-native-vector-icons/Feather'
 import Icon2 from 'react-native-vector-icons/Ionicons'
 import ItemCart from '../item_screen/ItemCart'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 const Cart = () => {
-    const [quantityProduct, setQuantityProduct] = useState(0);
-    const [totalPrice, setTotalPrice] = useState(0);
-    const [ship, setShip] = useState(40.00);
-    const [importChange, setImportChange] = useState(128.00);
-
-
     const cartData = useSelector(state => state.Reducers);
+    const dispatch = useDispatch();
     console.log("Data List: ", cartData);
     console.log("Data length: ", cartData.length);
+    var shipPrice = 40.00;
+    var changesPrice = 128.00;
     var tong = 0;
     const sumPrice = (cartData) => {
         for (let index = 0; index < cartData.length; index++) {
             tong += cartData[index].priceNew;
         }
         return tong;
+    }
+
+    const totalPrice = () => {
+        return tong + shipPrice + changesPrice;
     }
     
     
@@ -47,66 +48,8 @@ const Cart = () => {
             <ScrollView showsHorizontalScrollIndicator={false}>
                 <View style={{ paddingHorizontal: 16 }}>
                     {
-                        cartData.map((item) => <ItemCart key={item.id} data={item} />)
+                        cartData.map((item, index) => <ItemCart key={item.id} data={item} index = {index} />)
                     }
-
-                    {/* <View style={styles.group_card}>
-                        <Image style={styles.image} source={require('../assets/product_1.png')} />
-                        <View style={styles.group_right}>
-                            <View style={styles.group_right_up}>
-                                <Text style={styles.textName}>Nike Air Zoom Pegasus 36 Miami</Text>
-                                <Feather name="heart" color="#9098B1" size={20} />
-                                <FontAwesome style={styles.icon} name="trash-o" color="#9098B1" size={20} />
-                            </View>
-                            <View style={styles.group_right_down}>
-                                <Text style={styles.textPrice}>$299,43</Text>
-                                <View style={styles.group_button}>
-                                    <TouchableOpacity>
-                                        <View style={styles.viewButtonQuantity}>
-                                            <FontAwesome style={styles.icon} name="minus" color="#9098B1" size={15} />
-                                        </View>
-                                    </TouchableOpacity>
-                                    <View style={[styles.viewButtonQuantity, { width: 40, backgroundColor: '#EBF0FF' }]}>
-                                        <Text style={styles.textQuantity}>2</Text>
-                                    </View>
-                                    <TouchableOpacity>
-                                        <View style={styles.viewButtonQuantity}>
-                                            <FontAwesome style={styles.icon} name="plus" color="#9098B1" size={15} />
-                                        </View>
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
-                        </View>
-                    </View>
-
-                    <View style={styles.group_card}>
-                        <Image style={styles.image} source={require('../assets/product_2.png')} />
-                        <View style={styles.group_right}>
-                            <View style={styles.group_right_up}>
-                                <Text style={styles.textName}>Nike Air Zoom Pegasus 36 Miami</Text>
-                                <Feather name="heart" color="#9098B1" size={20} />
-                                <FontAwesome style={styles.icon} name="trash-o" color="#9098B1" size={20} />
-                            </View>
-                            <View style={styles.group_right_down}>
-                                <Text style={styles.textPrice}>$299,43</Text>
-                                <View style={styles.group_button}>
-                                    <TouchableOpacity>
-                                        <View style={styles.viewButtonQuantity}>
-                                            <FontAwesome style={styles.icon} name="minus" color="#9098B1" size={15} />
-                                        </View>
-                                    </TouchableOpacity>
-                                    <View style={[styles.viewButtonQuantity, { width: 40, backgroundColor: '#EBF0FF' }]}>
-                                        <Text style={styles.textQuantity}>1</Text>
-                                    </View>
-                                    <TouchableOpacity>
-                                        <View style={styles.viewButtonQuantity}>
-                                            <FontAwesome style={styles.icon} name="plus" color="#9098B1" size={15} />
-                                        </View>
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
-                        </View>
-                    </View> */}
 
                     <View style={styles.inputHeader}>
                         <TextInput style={styles.input} placeholder='Enter Cupon Code' />
@@ -122,16 +65,16 @@ const Cart = () => {
                         </View>
                         <View style={[styles.viewFlex, { marginBottom: 12 }]}>
                             <Text style={styles.textItemLeft}>Shipping</Text>
-                            <Text style={styles.textItemRight}>$40.00</Text>
+                            <Text style={styles.textItemRight}>${shipPrice}</Text>
                         </View>
                         <View style={[styles.viewFlex, { marginBottom: 12 }]}>
                             <Text style={styles.textItemLeft}>Import charges</Text>
-                            <Text style={styles.textItemRight}>$128.00</Text>
+                            <Text style={styles.textItemRight}>${changesPrice}</Text>
                         </View>
                         <View style={{ borderWidth: 1, borderStyle: 'dashed', borderColor: '#EBF0FF', marginBottom: 12 }}></View>
                         <View style={[styles.viewFlex, {}]}>
                             <Text style={[styles.textItemLeft, { fontWeight: '700', color: '#223263', }]}>Total Price</Text>
-                            <Text style={[styles.textItemRight, { fontWeight: '700', color: '#40BFFF', }]}>$766.86</Text>
+                            <Text style={[styles.textItemRight, { fontWeight: '700', color: '#40BFFF', }]}>${totalPrice()}</Text>
                         </View>
                     </View>
 
