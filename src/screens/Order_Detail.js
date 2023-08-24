@@ -116,9 +116,9 @@ const Order_Detail = (props) => {
                     {/* End Item 1 */}
 
                     {/* Button */}
-                    <Pressable style={styles.button}>
+                    <TouchableOpacity style={styles.button}>
                         <Text style={styles.textButton}>Notify Me</Text>
-                    </Pressable>
+                    </TouchableOpacity>
                 </View>
             </ScrollView>
         </View>

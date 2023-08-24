@@ -42,9 +42,9 @@ const Add_Card = (props) => {
                     <TextInput style={styles.input} placeholder='Enter Card Number' />
                 </View>
             </ScrollView>
-            <Pressable style={styles.buttonAdd}>
+            <TouchableOpacity style={styles.buttonAdd}>
                 <Text style={styles.textButton}>Add Card</Text>
-            </Pressable>
+            </TouchableOpacity>
         </View>
     )
 }

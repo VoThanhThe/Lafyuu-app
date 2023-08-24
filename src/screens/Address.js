@@ -72,9 +72,9 @@ const Address = (props) => {
 
         </View>
       </ScrollView>
-      <Pressable style={styles.buttonAdd} onPress={() => {navigation.navigate('Add_Address')}}>
+      <TouchableOpacity style={styles.buttonAdd} onPress={() => {navigation.navigate('Add_Address')}}>
         <Text style={styles.textButton}>Add Address</Text>
-      </Pressable>
+      </TouchableOpacity>
     </View>
   )
 }

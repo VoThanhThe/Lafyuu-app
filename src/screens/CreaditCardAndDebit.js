@@ -54,9 +54,9 @@ const CreaditCardAndDebit = (props) => {
 
                 </View>
             </ScrollView>
-            <Pressable style={styles.buttonAdd} onPress={() => {navigation.navigate('Add_Card')}}>
+            <TouchableOpacity style={styles.buttonAdd} onPress={() => {navigation.navigate('Add_Card')}}>
                 <Text style={styles.textButton}>Add Card</Text>
-            </Pressable>
+            </TouchableOpacity>
         </View>
     )
 }

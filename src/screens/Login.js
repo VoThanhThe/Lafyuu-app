@@ -88,20 +88,20 @@ const Login = props => {
         ]}>
         OR
       </Text>
-      <Pressable style={styles.buttonSocial}>
+      <ToastAndroid style={styles.buttonSocial}>
         <Text style={styles.textButtonSocial}>Login with Google</Text>
         <Image
           style={styles.imageGG}
           source={require('../assets/Google.png')}
         />
-      </Pressable>
-      <Pressable style={styles.buttonSocial}>
+      </ToastAndroid>
+      <ToastAndroid style={styles.buttonSocial}>
         <Text style={styles.textButtonSocial}>Login with facebook</Text>
         <Image
           style={styles.imageFace}
           source={require('../assets/Facebook.png')}
         />
-      </Pressable>
+      </ToastAndroid>
 
       <Text style={[styles.header, { color: '#40BFFF' }]}>Forgot Password?</Text>
       <View style={styles.viewFooter}>

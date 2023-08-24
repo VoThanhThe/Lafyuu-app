@@ -51,9 +51,9 @@ const Add_Address = (props) => {
 
                 </View>
             </ScrollView>
-            <Pressable style={styles.buttonAdd}>
+            <TouchableOpacity style={styles.buttonAdd}>
                 <Text style={styles.textButton}>Add Address</Text>
-            </Pressable>
+            </TouchableOpacity>
         </View>
     )
 }
