@@ -1,13 +1,39 @@
-import { StyleSheet, Text, View, Image, TextInput, FlatList, Pressable, ScrollView, TouchableOpacity } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View, Image, TextInput, FlatList, Alert, ScrollView, TouchableOpacity } from 'react-native'
+import React, {useContext, useState} from 'react'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Icon1 from 'react-native-vector-icons/Feather'
 import Icon2 from 'react-native-vector-icons/Ionicons'
 import Icon3 from 'react-native-vector-icons/MaterialIcons'
 
+import { AppContext } from '../ultil/AppContext';
+
 
 const Account = (props) => {
     const {navigation} = props;
+    const { isLogin, setisLogin } = useContext(AppContext);
+
+    const showConfirmDialog = () => {
+        return Alert.alert(
+          "Are your sure?",
+          "Are you sure you want to remove this wishlist?",
+          [
+            // The "Yes" button
+            {
+              text: "Yes",
+              onPress: () => (
+                // setShowBox(false)
+                setisLogin(false)
+                
+              )
+            },
+            // The "No" button
+            // Does nothing but dismiss the dialog when tapped
+            {
+              text: "No",
+            },
+          ]
+        );
+    }
     return (
         <View style={styles.container}>
             {/* Start Header */}
@@ -38,6 +64,12 @@ const Account = (props) => {
                     <View style={{ padding: 16, flexDirection: 'row', alignItems: 'center' }}>
                         <Icon3 name="payment" color="#40BFFF" size={20} />
                         <Text style={styles.text}>Payment</Text>
+                    </View>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => showConfirmDialog()}>
+                    <View style={{ padding: 16, flexDirection: 'row', alignItems: 'center' }}>
+                        <Icon3 name="logout" color="red" size={20} />
+                        <Text style={styles.text}>Log out</Text>
                     </View>
                 </TouchableOpacity>
 

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, TextInput, FlatList, Pressable, ScrollView, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, Image, TextInput, FlatList, Alert, ScrollView, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Feather from 'react-native-vector-icons/Feather'
@@ -15,6 +15,29 @@ const ItemCart = (props) => {
     const [isAddWishlist, setIsAddWishlist] = useState(false);
     var number = 1;
     const [quantity, setQuantity] = useState(number);
+
+    const showConfirmDialog = () => {
+        return Alert.alert(
+            "Are your sure?",
+            "Are you sure you want to remove this cart?",
+            [
+                // The "Yes" button
+                {
+                    text: "Yes",
+                    onPress: () => (
+                        // setShowBox(false)
+                        dispatch(removeFromCart(index))
+
+                    )
+                },
+                // The "No" button
+                // Does nothing but dismiss the dialog when tapped
+                {
+                    text: "No",
+                },
+            ]
+        );
+    };
     return (
         <View style={styles.container}>
             <View style={styles.group_card}>
@@ -33,7 +56,7 @@ const ItemCart = (props) => {
                                     )
                             }
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => dispatch(removeFromCart(index))}>
+                        <TouchableOpacity onPress={() => showConfirmDialog()}>
                             <FontAwesome style={styles.icon} name="trash-o" color="#9098B1" size={20} />
                         </TouchableOpacity>
                     </View>
