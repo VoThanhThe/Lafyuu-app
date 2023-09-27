@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity, Alert } from 'react-native'
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Icon1 from 'react-native-vector-icons/Feather'
 import Icon2 from 'react-native-vector-icons/Ionicons'
@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import {
     addToWishlist,
     removeFromWishlist
-  } from '../redux2/actions/Actions'
+} from '../redux2/actions/Actions'
 
 const ItemFavoriteProduct = (props) => {
     const { dataProduct, index } = props;
@@ -15,27 +15,27 @@ const ItemFavoriteProduct = (props) => {
     const [showBox, setShowBox] = useState(true);
 
     const showConfirmDialog = () => {
-    return Alert.alert(
-      "Are your sure?",
-      "Are you sure you want to remove this wishlist?",
-      [
-        // The "Yes" button
-        {
-          text: "Yes",
-          onPress: () => (
-            // setShowBox(false)
-            dispatch(removeFromWishlist(index))
-            
-          )
-        },
-        // The "No" button
-        // Does nothing but dismiss the dialog when tapped
-        {
-          text: "No",
-        },
-      ]
-    );
-  };
+        return Alert.alert(
+            "Are your sure?",
+            "Are you sure you want to remove this wishlist?",
+            [
+                // The "Yes" button
+                {
+                    text: "Yes",
+                    onPress: () => (
+                        // setShowBox(false)
+                        dispatch(removeFromWishlist(index))
+
+                    )
+                },
+                // The "No" button
+                // Does nothing but dismiss the dialog when tapped
+                {
+                    text: "No",
+                },
+            ]
+        );
+    };
 
     return (
         <View style={styles.container}>

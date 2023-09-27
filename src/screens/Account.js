@@ -15,7 +15,7 @@ const Account = (props) => {
     const showConfirmDialog = () => {
         return Alert.alert(
           "Are your sure?",
-          "Are you sure you want to remove this wishlist?",
+          "Are you sure you want to Log out this application?",
           [
             // The "Yes" button
             {

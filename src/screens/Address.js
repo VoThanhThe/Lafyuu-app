@@ -1,7 +1,6 @@
-import { StyleSheet, Text, View, ScrollView, TextInput, Image, FlatList, Button, Pressable, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, Pressable, TouchableOpacity } from 'react-native'
 import React from 'react'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
-import Feather from 'react-native-vector-icons/Feather'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
 const Address = (props) => {

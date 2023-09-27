@@ -10,11 +10,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   addItemToCart,
   addToWishlist,
-  removeFromCart,
-  removeFromWishlist
 } from '../redux2/actions/Actions'
 
 import AxiosIntance from '../ultil/AxiosIntance';
+import LoadingScreen from './LoadingScreen'
 
 const dataSize = [
   {
@@ -63,82 +62,6 @@ const dataSize = [
   },
 
 ]
-const dataFlashSale = [
-
-  {
-    id: '1',
-    title: 'FS - Nike Air Max 270 React...',
-    imageURL: 'https://firebasestorage.googleapis.com/v0/b/app-shoes-6fd12.appspot.com/o/product_1.png?alt=media&token=5016789f-2ee6-41a2-8c21-30539c43f018',
-    priceNew: 299.43,
-    priceOld: '$534,33',
-    sale: '24% Off',
-
-  },
-  {
-    id: '2',
-    title: 'FS - Nike Air Max 270 React...',
-    imageURL: 'https://firebasestorage.googleapis.com/v0/b/app-shoes-6fd12.appspot.com/o/product_2.png?alt=media&token=6eadece2-77cb-492a-895f-4ce34eae226e',
-    priceNew: 299.43,
-    priceOld: '$534,33',
-    sale: '24% Off',
-
-  },
-  {
-    id: '3',
-    title: 'FS - Nike Air Max 270 React...',
-    imageURL: 'https://firebasestorage.googleapis.com/v0/b/app-shoes-6fd12.appspot.com/o/product_3.png?alt=media&token=582ab2ea-7ba0-463b-9f8b-4fea09e800af',
-    priceNew: 299.43,
-    priceOld: '$534,33',
-    sale: '24% Off',
-
-  },
-  {
-    id: '4',
-    title: 'FS - Nike Air Max 270 React...',
-    imageURL: 'https://firebasestorage.googleapis.com/v0/b/app-shoes-6fd12.appspot.com/o/product_4.png?alt=media&token=9ff64334-a8d3-4160-ac60-9212999e7e26',
-    priceNew: 299.43,
-    priceOld: '$534,33',
-    sale: '24% Off',
-
-  },
-  {
-    id: '5',
-    title: 'FS - Nike Air Max 270 React...',
-    imageURL: 'https://firebasestorage.googleapis.com/v0/b/app-shoes-6fd12.appspot.com/o/product_5.png?alt=media&token=ee189fce-b36a-4402-8930-cd3b46196f49',
-    priceNew: 299.43,
-    priceOld: '$534,33',
-    sale: '24% Off',
-
-  },
-  {
-    id: '6',
-    title: 'FS - Nike Air Max 270 React...',
-    imageURL: 'https://firebasestorage.googleapis.com/v0/b/app-shoes-6fd12.appspot.com/o/product_6.png?alt=media&token=16fcc93a-a2d2-4f1d-95b7-ce481e17914b',
-    priceNew: 299.43,
-    priceOld: '$534,33',
-    sale: '24% Off',
-
-  },
-  {
-    id: '7',
-    title: 'FS - Nike Air Max 270 React...',
-    imageURL: 'https://firebasestorage.googleapis.com/v0/b/app-shoes-6fd12.appspot.com/o/product_7.png?alt=media&token=1b0ac462-fea5-49bc-816d-11160a572197',
-    priceNew: 299.43,
-    priceOld: '$534,33',
-    sale: '24% Off',
-
-  },
-  {
-    id: '8',
-    title: 'FS - Nike Air Max 270 React...',
-    imageURL: 'https://firebasestorage.googleapis.com/v0/b/app-shoes-6fd12.appspot.com/o/product_8.png?alt=media&token=d6f06ac3-b901-480b-8715-4ee799085f97',
-    priceNew: 299.43,
-    priceOld: '$534,33',
-    sale: '24% Off',
-
-  },
-
-]
 const dataColor = [
   {
     id: '1',
@@ -172,6 +95,7 @@ const ProductDetail = (props) => {
   const { data } = params;
 
   console.log("Data id: ", data);
+  const [isLoading, setIsLoading] = useState(true);
 
   const [isAddWishlist, setIsAddWishlist] = useState(false);
   const [dataProduct, setDataProduct] = useState([]);
@@ -183,192 +107,200 @@ const ProductDetail = (props) => {
 
   useEffect(() => {
     const getNews = async () => {
-        const response = await AxiosIntance().get("/api/product");
-        console.log(response);
-        if (response.returnData.error == false) {
-          setDataProduct(response.products);
-            ToastAndroid.show("Lấy dữ liệu thành công", ToastAndroid.SHORT);
-        } else {
-            ToastAndroid.show("Lấy dữ liệu thất bại", ToastAndroid.SHORT);
-        }
+      const response = await AxiosIntance().get("/api/product");
+      console.log(response);
+      if (response.returnData.error == false) {
+        setDataProduct(response.products);
+        setIsLoading(false);
+      } else {
+        console.log("Lấy dữ liệu thất bại");
+      }
     }
     getNews();
     return () => {
 
     }
-}, []);
+  }, []);
 
   return (
 
     <View style={styles.container}>
-
-      {/* Start Header */}
-      <View style={styles.groupHeader}>
-        <View style={{ flexDirection: 'row' }}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Ionicons name="chevron-back" color="#9098B1" size={20} />
-          </TouchableOpacity>
-          <Text style={styles.textHeader}>{data.name}</Text>
-        </View>
-        <View style={{ flexDirection: 'row' }}>
-          <Icon name="search" color="#9098B1" size={20} />
-          <Icon style={{ marginStart: 32.25 }} name="ellipsis-v" color="#9098B1" size={20} />
-        </View>
-      </View>
-      {/* End Header */}
-      <ScrollView showsVerticalScrollIndicator={false}>
-        {/* Image Detail */}
-
-        <Image style={styles.image} resizeMode='cover' source={{ uri: data.image }} />
-        <View style={{ justifyContent: 'center', alignItems: 'center', padding: 16 }}>
-          <View style={styles.groupButton}>
-            <Text style={styles.buttonBannel}></Text>
-            <Text style={styles.buttonBannel}></Text>
-            <Text style={[styles.buttonBannel, { backgroundColor: '#40BFFF' }]}></Text>
-            <Text style={styles.buttonBannel}></Text>
-            <Text style={styles.buttonBannel}></Text>
-          </View>
-        </View>
-        {/* Image Detail */}
-        <View style={{ paddingHorizontal: 16 }}>
-          {/* Start Title */}
-          <View style={styles.groupTitle}>
-            <Text style={styles.title}>{data.name}</Text>
-            <TouchableOpacity onPress={() => {setIsAddWishlist(true) ,dispatch(addToWishlist(data))}}>
-              {/* <Feather name="heart" color="#9098B1" size={18} /> */}
-              {
-                !isAddWishlist ?
-                  (
-                    <Feather name="heart" color="#9098B1" size={18} />
-                  ) :
-                  (
-                    <Icon name="heart" color="red" size={18} />
-                  )
-              }
-            </TouchableOpacity>
-          </View>
-          {/* End Title */}
-
-          {/* 5 Star */}
-          <View style={styles.groupStar}>
-            <Icon style={styles.icon} name="star" color="#FFC833" size={16} />
-            <Icon style={styles.icon} name="star" color="#FFC833" size={16} />
-            <Icon style={styles.icon} name="star" color="#FFC833" size={16} />
-            <Icon style={styles.icon} name="star" color="#FFC833" size={16} />
-            <Icon style={styles.icon} name="star" color="#EBF0FF" size={16} />
-          </View>
-          {/* 5 Star */}
-
-          {/* Price */}
-          <Text style={styles.price}>${data.price}</Text>
-          {/* Price */}
-
-          {/* Select Size */}
-          <Text style={styles.titleItem}>Select Size</Text>
-          <FlatList
-            data={dataSize}
-            renderItem={({ item }) => <ItemSize dataSize={item} />}
-            keyExtractor={item => item.id}
-            showsHorizontalScrollIndicator={false}
-            showsVerticalScrollIndicator={false}
-            horizontal={true}
-          />
-          {/* Select Size */}
-
-          {/* Select Color */}
-          <Text style={styles.titleItem}>Select Color</Text>
-          <FlatList
-            data={dataColor}
-            renderItem={({ item }) => <ItemColor dataColor={item} />}
-            keyExtractor={item => item.id}
-            showsHorizontalScrollIndicator={false}
-            showsVerticalScrollIndicator={false}
-            horizontal={true}
-          />
-          {/* Select Color */}
-
-          {/* Specification */}
-          <Text style={styles.titleItem}>Specification</Text>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', }}>
-            <Text style={styles.item}>Shown:</Text>
-            <Text style={[styles.item, { color: '#9098B1', textAlign: 'right' }]}>Laser{'\n'} Blue/Anthracite/Watermelon/White</Text>
-          </View>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 16, }}>
-            <Text style={styles.item}>Style:</Text>
-            <Text style={[styles.item, { color: '#9098B1', textAlign: 'right' }]}>CD0113-400</Text>
-          </View>
-
-          <Text style={[styles.item, { color: '#9098B1', textAlign: 'left', }]}>The Nike Air Max 270
-            React ENG combines a full-length React
-            foam midsole with a 270 Max Air unit for
-            unrivaled comfort and a striking visual
-            experience.</Text>
-
-          {/* Specification */}
-
-          {/* Review Product */}
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingEnd: 16 }}>
-            <Text style={[styles.titleItem, { marginBottom: 8 }]}>Review Product</Text>
-            <Text style={[styles.titleItem, { color: '#40BFFF', marginBottom: 8 }]}>See More</Text>
-          </View>
-          {/* 5 Star */}
-          <View style={[styles.groupStar, { marginBottom: 16 }]}>
-            <Icon style={styles.icon} name="star" color="#FFC833" size={16} />
-            <Icon style={styles.icon} name="star" color="#FFC833" size={16} />
-            <Icon style={styles.icon} name="star" color="#FFC833" size={16} />
-            <Icon style={styles.icon} name="star" color="#FFC833" size={16} />
-            <Icon style={styles.icon} name="star" color="#EBF0FF" size={16} />
-            <Text style={styles.textReview} >4.5 (5 Review)</Text>
-          </View>
-          {/* 5 Star */}
-
-          <View style={[styles.viewflex_1, {}]}>
-            <Image style={styles.image_profile} resizeMode='cover' source={require('../assets/img_profile.png')} />
-            <View style={{ paddingStart: 16 }}>
-              <Text style={styles.textProfile}>James Lawson</Text>
-              {/* 5 Star */}
-              <View style={[styles.groupStar, { marginStart: 0 }]}>
-                <Icon style={styles.icon} name="star" color="#FFC833" size={16} />
-                <Icon style={styles.icon} name="star" color="#FFC833" size={16} />
-                <Icon style={styles.icon} name="star" color="#FFC833" size={16} />
-                <Icon style={styles.icon} name="star" color="#FFC833" size={16} />
-                <Icon style={styles.icon} name="star" color="#EBF0FF" size={16} />
+      {
+        isLoading ? (
+          <LoadingScreen />
+        ) : (
+          <View>
+            {/* Start Header */}
+            <View style={styles.groupHeader}>
+              <View style={{ flexDirection: 'row' }}>
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                  <Ionicons name="chevron-back" color="#9098B1" size={20} />
+                </TouchableOpacity>
+                <Text style={styles.textHeader}>{data.name}</Text>
               </View>
-
-              {/* 5 Star */}
+              <View style={{ flexDirection: 'row' }}>
+                <Icon name="search" color="#9098B1" size={20} />
+                <Icon style={{ marginStart: 32.25 }} name="ellipsis-v" color="#9098B1" size={20} />
+              </View>
             </View>
+            {/* End Header */}
+            <ScrollView showsVerticalScrollIndicator={false}>
+              {/* Image Detail */}
+
+              <Image style={styles.image} resizeMode='cover' source={{ uri: data.image }} />
+              <View style={{ justifyContent: 'center', alignItems: 'center', padding: 16 }}>
+                <View style={styles.groupButton}>
+                  <Text style={styles.buttonBannel}></Text>
+                  <Text style={styles.buttonBannel}></Text>
+                  <Text style={[styles.buttonBannel, { backgroundColor: '#40BFFF' }]}></Text>
+                  <Text style={styles.buttonBannel}></Text>
+                  <Text style={styles.buttonBannel}></Text>
+                </View>
+              </View>
+              {/* Image Detail */}
+              <View style={{ paddingHorizontal: 16 }}>
+                {/* Start Title */}
+                <View style={styles.groupTitle}>
+                  <Text style={styles.title}>{data.name}</Text>
+                  <TouchableOpacity onPress={() => { setIsAddWishlist(true), dispatch(addToWishlist(data)) }}>
+                    {/* <Feather name="heart" color="#9098B1" size={18} /> */}
+                    {
+                      !isAddWishlist ?
+                        (
+                          <Feather name="heart" color="#9098B1" size={18} />
+                        ) :
+                        (
+                          <Icon name="heart" color="red" size={18} />
+                        )
+                    }
+                  </TouchableOpacity>
+                </View>
+                {/* End Title */}
+
+                {/* 5 Star */}
+                <View style={styles.groupStar}>
+                  <Icon style={styles.icon} name="star" color="#FFC833" size={16} />
+                  <Icon style={styles.icon} name="star" color="#FFC833" size={16} />
+                  <Icon style={styles.icon} name="star" color="#FFC833" size={16} />
+                  <Icon style={styles.icon} name="star" color="#FFC833" size={16} />
+                  <Icon style={styles.icon} name="star" color="#EBF0FF" size={16} />
+                </View>
+                {/* 5 Star */}
+
+                {/* Price */}
+                <Text style={styles.price}>${data.price}</Text>
+                {/* Price */}
+
+                {/* Select Size */}
+                <Text style={styles.titleItem}>Select Size</Text>
+                <FlatList
+                  data={dataSize}
+                  renderItem={({ item }) => <ItemSize dataSize={item} />}
+                  keyExtractor={item => item.id}
+                  showsHorizontalScrollIndicator={false}
+                  showsVerticalScrollIndicator={false}
+                  horizontal={true}
+                />
+                {/* Select Size */}
+
+                {/* Select Color */}
+                <Text style={styles.titleItem}>Select Color</Text>
+                <FlatList
+                  data={dataColor}
+                  renderItem={({ item }) => <ItemColor dataColor={item} />}
+                  keyExtractor={item => item.id}
+                  showsHorizontalScrollIndicator={false}
+                  showsVerticalScrollIndicator={false}
+                  horizontal={true}
+                />
+                {/* Select Color */}
+
+                {/* Specification */}
+                <Text style={styles.titleItem}>Specification</Text>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', }}>
+                  <Text style={styles.item}>Shown:</Text>
+                  <Text style={[styles.item, { color: '#9098B1', textAlign: 'right' }]}>Laser{'\n'} Blue/Anthracite/Watermelon/White</Text>
+                </View>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 16, }}>
+                  <Text style={styles.item}>Style:</Text>
+                  <Text style={[styles.item, { color: '#9098B1', textAlign: 'right' }]}>CD0113-400</Text>
+                </View>
+
+                <Text style={[styles.item, { color: '#9098B1', textAlign: 'left', }]}>The Nike Air Max 270
+                  React ENG combines a full-length React
+                  foam midsole with a 270 Max Air unit for
+                  unrivaled comfort and a striking visual
+                  experience.</Text>
+
+                {/* Specification */}
+
+                {/* Review Product */}
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingEnd: 16 }}>
+                  <Text style={[styles.titleItem, { marginBottom: 8 }]}>Review Product</Text>
+                  <Text style={[styles.titleItem, { color: '#40BFFF', marginBottom: 8 }]}>See More</Text>
+                </View>
+                {/* 5 Star */}
+                <View style={[styles.groupStar, { marginBottom: 16 }]}>
+                  <Icon style={styles.icon} name="star" color="#FFC833" size={16} />
+                  <Icon style={styles.icon} name="star" color="#FFC833" size={16} />
+                  <Icon style={styles.icon} name="star" color="#FFC833" size={16} />
+                  <Icon style={styles.icon} name="star" color="#FFC833" size={16} />
+                  <Icon style={styles.icon} name="star" color="#EBF0FF" size={16} />
+                  <Text style={styles.textReview} >4.5 (5 Review)</Text>
+                </View>
+                {/* 5 Star */}
+
+                <View style={[styles.viewflex_1, {}]}>
+                  <Image style={styles.image_profile} resizeMode='cover' source={require('../assets/img_profile.png')} />
+                  <View style={{ paddingStart: 16 }}>
+                    <Text style={styles.textProfile}>James Lawson</Text>
+                    {/* 5 Star */}
+                    <View style={[styles.groupStar, { marginStart: 0 }]}>
+                      <Icon style={styles.icon} name="star" color="#FFC833" size={16} />
+                      <Icon style={styles.icon} name="star" color="#FFC833" size={16} />
+                      <Icon style={styles.icon} name="star" color="#FFC833" size={16} />
+                      <Icon style={styles.icon} name="star" color="#FFC833" size={16} />
+                      <Icon style={styles.icon} name="star" color="#EBF0FF" size={16} />
+                    </View>
+
+                    {/* 5 Star */}
+                  </View>
+                </View>
+
+                <Text style={[styles.item, { color: '#9098B1', textAlign: 'left', paddingTop: 16, }]}>air max are always very comfortable fit, clean and just perfect in every way. just the box was too small and scrunched the sneakers up a little bit, not sure if the box was always this small but the 90s are and will always be one of my favorites.</Text>
+
+                <View style={[styles.viewflex_1, { marginTop: 16, marginBottom: 16 }]}>
+                  <Image style={styles.image_review} resizeMode='cover' source={require('../assets/img_review_1.png')} />
+                  <Image style={styles.image_review} resizeMode='cover' source={require('../assets/img_review_2.png')} />
+                  <Image style={styles.image_review} resizeMode='cover' source={require('../assets/img_review_3.png')} />
+                </View>
+
+                <Text style={[styles.item, { color: '#9098B1', textAlign: 'left', fontSize: 10 }]}>December 10, 2016</Text>
+                {/* Review Product */}
+
+
+                {/* You Might Also Like */}
+                <Text style={styles.titleItem}>You Might Also Like</Text>
+                <FlatList style={{ marginVertical: 12 }}
+                  data={dataProduct}
+                  renderItem={({ item }) => <ItemFlashSale data={item} navigation={navigation} />}
+                  keyExtractor={item => item._id}
+                  horizontal={true}
+                  showsHorizontalScrollIndicator={false}
+                />
+                {/* You Might Also Like */}
+
+                <TouchableOpacity style={styles.button}
+                  onPress={() => dispatch(addItemToCart(data))}
+                >
+                  <Text style={styles.textButton}>Add To Cart</Text>
+                </TouchableOpacity>
+              </View>
+            </ScrollView>
           </View>
+        )
+      }
 
-          <Text style={[styles.item, { color: '#9098B1', textAlign: 'left', paddingTop: 16, }]}>air max are always very comfortable fit, clean and just perfect in every way. just the box was too small and scrunched the sneakers up a little bit, not sure if the box was always this small but the 90s are and will always be one of my favorites.</Text>
-
-          <View style={[styles.viewflex_1, { marginTop: 16, marginBottom: 16 }]}>
-            <Image style={styles.image_review} resizeMode='cover' source={require('../assets/img_review_1.png')} />
-            <Image style={styles.image_review} resizeMode='cover' source={require('../assets/img_review_2.png')} />
-            <Image style={styles.image_review} resizeMode='cover' source={require('../assets/img_review_3.png')} />
-          </View>
-
-          <Text style={[styles.item, { color: '#9098B1', textAlign: 'left', fontSize: 10 }]}>December 10, 2016</Text>
-          {/* Review Product */}
-
-
-          {/* You Might Also Like */}
-          <Text style={styles.titleItem}>You Might Also Like</Text>
-          <FlatList style={{ marginVertical: 12 }}
-            data={dataProduct}
-            renderItem={({ item }) => <ItemFlashSale data={item} navigation={navigation} />}
-            keyExtractor={item => item._id}
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-          />
-          {/* You Might Also Like */}
-
-          <TouchableOpacity style={styles.button}
-            onPress={() => dispatch(addItemToCart(data))}
-          >
-            <Text style={styles.textButton}>Add To Cart</Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
     </View >
 
 

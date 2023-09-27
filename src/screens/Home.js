@@ -5,186 +5,193 @@ import {
   Image,
   TextInput,
   FlatList,
-  Button,
   TouchableOpacity,
-  ToastAndroid
 } from 'react-native';
-import React, {useContext, useState, useEffect} from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon1 from 'react-native-vector-icons/Feather';
 import Icon2 from 'react-native-vector-icons/Ionicons';
 import ItemCategory from '../item_screen/ItemCategory';
 import ItemFlashSale from '../item_screen/ItemFlashSale';
-import {ScrollView} from 'react-native-gesture-handler';
+import { ScrollView } from 'react-native-gesture-handler';
 import ItemProduct from '../item_screen/ItemProduct';
-import {AppContext} from '../ultil/AppContext';
+import { AppContext } from '../ultil/AppContext';
 import AxiosIntance from '../ultil/AxiosIntance';
+import LoadingScreen from './LoadingScreen';
 
 const Home = (props) => {
-  const {navigation} = props;
-  const {isLogin, setisLogin} = useContext(AppContext);
+  const { navigation } = props;
   const [dataProduct, setDataProduct] = useState([]);
-
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     const getNews = async () => {
-        const response = await AxiosIntance().get("/api/product");
-        console.log(response);
-        if (response.returnData.error == false) {
-          setDataProduct(response.products);
-            ToastAndroid.show("Lấy dữ liệu thành công", ToastAndroid.SHORT);
-        } else {
-            ToastAndroid.show("Lấy dữ liệu thất bại", ToastAndroid.SHORT);
-        }
+      const response = await AxiosIntance().get("/api/product");
+      console.log(response);
+      if (response.returnData.error == false) {
+        setDataProduct(response.products);
+        setIsLoading(false);
+      } else {
+        console.log("Lấy dữ liệu thất bại");
+      }
     }
     getNews();
     return () => {
 
     }
-}, []);
+  }, []);
 
   return (
     <View style={styles.container}>
-      {/* Start Header */}
-      <View style={styles.groupHeader}>
-        <View style={styles.inputHeader}>
-          <TextInput style={styles.input} placeholder="Search Product" />
-          <Icon style={styles.icon} name="search" color="#40BFFF" size={20} />
-        </View>
-        <Icon1
-          onPress={() => {
-            {
-              navigation.navigate('FavoriteProduct');
-            }
-          }}
-          name="heart"
-          color="#9098B1"
-          size={20}
-        />
-        <Icon2
-          onPress={() => {
-            {
-              navigation.navigate('NotificationStack');
-            }
-          }}
-          name="notifications-outline"
-          color="#9098B1"
-          size={20}
-        />
-      </View>
-      {/* End Header */}
-
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={{padding: 16}}>
-          {/* Bannel 1 */}
-          <TouchableOpacity
-            onPress={() => {
-              {
-                navigation.navigate('Offer');
-              }
-            }}>
-            <Image
-              style={styles.image}
-              source={require('../assets/img_bannel.png')}
-            />
-          </TouchableOpacity>
-          <View
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              padding: 16,
-            }}>
-            <View style={styles.groupButton}>
-              <Text style={styles.buttonBannel}></Text>
-              <Text style={styles.buttonBannel}></Text>
-              <Text
-                style={[
-                  styles.buttonBannel,
-                  {backgroundColor: '#40BFFF'},
-                ]}></Text>
-              <Text style={styles.buttonBannel}></Text>
-              <Text style={styles.buttonBannel}></Text>
+      {
+        isLoading ? (
+          <LoadingScreen />
+        ) : (
+          <View>
+            {/* Start Header */}
+            <View style={styles.groupHeader}>
+              <View style={styles.inputHeader}>
+                <TextInput style={styles.input} placeholder="Search Product" />
+                <Icon style={styles.icon} name="search" color="#40BFFF" size={20} />
+              </View>
+              <Icon1
+                onPress={() => {
+                  {
+                    navigation.navigate('FavoriteProduct');
+                  }
+                }}
+                name="heart"
+                color="#9098B1"
+                size={20}
+              />
+              <Icon2
+                onPress={() => {
+                  {
+                    navigation.navigate('NotificationStack');
+                  }
+                }}
+                name="notifications-outline"
+                color="#9098B1"
+                size={20}
+              />
             </View>
+            {/* End Header */}
+
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <View style={{ padding: 16 }}>
+                {/* Bannel 1 */}
+                <TouchableOpacity
+                  onPress={() => {
+                    {
+                      navigation.navigate('Offer');
+                    }
+                  }}>
+                  <Image
+                    style={styles.image}
+                    source={require('../assets/img_bannel.png')}
+                  />
+                </TouchableOpacity>
+                <View
+                  style={{
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    padding: 16,
+                  }}>
+                  <View style={styles.groupButton}>
+                    <Text style={styles.buttonBannel}></Text>
+                    <Text style={styles.buttonBannel}></Text>
+                    <Text
+                      style={[
+                        styles.buttonBannel,
+                        { backgroundColor: '#40BFFF' },
+                      ]}></Text>
+                    <Text style={styles.buttonBannel}></Text>
+                    <Text style={styles.buttonBannel}></Text>
+                  </View>
+                </View>
+                {/* Bannel 1 */}
+
+                {/* Start Flatlist Category */}
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                  }}>
+                  <Text style={styles.title}>Category</Text>
+                  <Text style={[styles.title, { color: '#40BFFF' }]}>
+                    More Category
+                  </Text>
+                </View>
+
+                <FlatList
+                  style={{ marginVertical: 12 }}
+                  data={dataCategory}
+                  renderItem={({ item }) => <ItemCategory data={item} navigation={navigation} />}
+                  keyExtractor={item => item.id}
+                  horizontal={true}
+                  showsHorizontalScrollIndicator={false}
+                />
+                {/* End Flatlist Category */}
+
+                {/* Start Flatlist FlashSale */}
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                  }}>
+                  <Text style={styles.title}>Flash Sale</Text>
+                  <Text style={[styles.title, { color: '#40BFFF' }]}>See More</Text>
+                </View>
+
+                <FlatList
+                  style={{ marginVertical: 12 }}
+                  data={dataProduct}
+                  renderItem={({ item }) => <ItemFlashSale data={item} navigation={navigation} />}
+                  keyExtractor={item => item._id}
+                  horizontal={true}
+                  showsHorizontalScrollIndicator={false}
+                />
+                {/* End Flatlist FlashSale */}
+
+                {/* Start Flatlist MegaSale */}
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                  }}>
+                  <Text style={styles.title}>Mega Sale</Text>
+                  <Text style={[styles.title, { color: '#40BFFF' }]}>See More</Text>
+                </View>
+
+                <FlatList
+                  style={{ marginVertical: 12 }}
+                  data={dataProduct}
+                  renderItem={({ item }) => <ItemFlashSale data={item} navigation={navigation} />}
+                  keyExtractor={item => item._id}
+                  horizontal={true}
+                  showsHorizontalScrollIndicator={false}
+                />
+                {/* End Flatlist MegaSale */}
+                {/* Bannel 2 */}
+                <Image
+                  style={styles.image}
+                  source={require('../assets/img_bannel_2.png')}
+                />
+                {/* Bannel 2 */}
+                <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
+                  {
+                    dataProduct.map((item) => <ItemProduct key={item._id} data={item} navigation={navigation} />)
+                  }
+                </View>
+
+              </View>
+            </ScrollView>
           </View>
-          {/* Bannel 1 */}
+        )
+      }
 
-          {/* Start Flatlist Category */}
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}>
-            <Text style={styles.title}>Category</Text>
-            <Text style={[styles.title, {color: '#40BFFF'}]}>
-              More Category
-            </Text>
-          </View>
-
-          <FlatList
-            style={{marginVertical: 12}}
-            data={dataCategory}
-            renderItem={({item}) => <ItemCategory data={item} navigation = {navigation} />}
-            keyExtractor={item => item.id}
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-          />
-          {/* End Flatlist Category */}
-
-          {/* Start Flatlist FlashSale */}
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}>
-            <Text style={styles.title}>Flash Sale</Text>
-            <Text style={[styles.title, {color: '#40BFFF'}]}>See More</Text>
-          </View>
-
-          <FlatList
-            style={{marginVertical: 12}}
-            data={dataProduct}
-            renderItem={({item}) => <ItemFlashSale data={item} navigation = {navigation} />}
-            keyExtractor={item => item._id}
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-          />
-          {/* End Flatlist FlashSale */}
-
-          {/* Start Flatlist MegaSale */}
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}>
-            <Text style={styles.title}>Mega Sale</Text>
-            <Text style={[styles.title, {color: '#40BFFF'}]}>See More</Text>
-          </View>
-
-          <FlatList
-            style={{marginVertical: 12}}
-            data={dataProduct}
-            renderItem={({item}) => <ItemFlashSale data={item} navigation = {navigation} />}
-            keyExtractor={item => item._id}
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-          />
-          {/* End Flatlist MegaSale */}
-          {/* Bannel 2 */}
-          <Image
-            style={styles.image}
-            source={require('../assets/img_bannel_2.png')}
-          />
-          {/* Bannel 2 */}
-          <View style = {{flexDirection: 'row', flexWrap:'wrap', justifyContent: 'space-between'}}>
-            {
-              dataProduct.map((item) => <ItemProduct key={item._id} data = {item} navigation = {navigation} />)
-            }
-          </View>
-          
-        </View>
-      </ScrollView>
     </View>
   );
 };
@@ -324,154 +331,5 @@ const dataCategory = [
     title: 'Skirt',
     imageURL:
       'https://firebasestorage.googleapis.com/v0/b/app-shoes-6fd12.appspot.com/o/ic_shirt.png?alt=media&token=9464c2f1-34c9-474b-b34d-25ccb35675aa',
-  },
-];
-const dataFlashSale = [
-  {
-    id: '1',
-    title: 'FS - Nike Air Max 270 React...',
-    imageURL:
-      'https://firebasestorage.googleapis.com/v0/b/app-shoes-6fd12.appspot.com/o/product_1.png?alt=media&token=5016789f-2ee6-41a2-8c21-30539c43f018',
-    priceNew: 299.43,
-    priceOld: '$534,33',
-    sale: '24% Off',
-  },
-  {
-    id: '2',
-    title: 'FS - Nike Air Max 270 React...',
-    imageURL:
-      'https://firebasestorage.googleapis.com/v0/b/app-shoes-6fd12.appspot.com/o/product_2.png?alt=media&token=6eadece2-77cb-492a-895f-4ce34eae226e',
-    priceNew: 299.43,
-    priceOld: '$534,33',
-    sale: '24% Off',
-  },
-  {
-    id: '3',
-    title: 'FS - Nike Air Max 270 React...',
-    imageURL:
-      'https://firebasestorage.googleapis.com/v0/b/app-shoes-6fd12.appspot.com/o/product_3.png?alt=media&token=582ab2ea-7ba0-463b-9f8b-4fea09e800af',
-    priceNew: 299.43,
-    priceOld: '$534,33',
-    sale: '24% Off',
-  },
-  {
-    id: '4',
-    title: 'FS - Nike Air Max 270 React...',
-    imageURL:
-      'https://firebasestorage.googleapis.com/v0/b/app-shoes-6fd12.appspot.com/o/product_4.png?alt=media&token=9ff64334-a8d3-4160-ac60-9212999e7e26',
-    priceNew: 299.43,
-    priceOld: '$534,33',
-    sale: '24% Off',
-  },
-  {
-    id: '5',
-    title: 'FS - Nike Air Max 270 React...',
-    imageURL:
-      'https://firebasestorage.googleapis.com/v0/b/app-shoes-6fd12.appspot.com/o/product_5.png?alt=media&token=ee189fce-b36a-4402-8930-cd3b46196f49',
-    priceNew: 299.43,
-    priceOld: '$534,33',
-    sale: '24% Off',
-  },
-  {
-    id: '6',
-    title: 'FS - Nike Air Max 270 React...',
-    imageURL:
-      'https://firebasestorage.googleapis.com/v0/b/app-shoes-6fd12.appspot.com/o/product_6.png?alt=media&token=16fcc93a-a2d2-4f1d-95b7-ce481e17914b',
-    priceNew: 299.43,
-    priceOld: '$534,33',
-    sale: '24% Off',
-  },
-  {
-    id: '7',
-    title: 'FS - Nike Air Max 270 React...',
-    imageURL:
-      'https://firebasestorage.googleapis.com/v0/b/app-shoes-6fd12.appspot.com/o/product_7.png?alt=media&token=1b0ac462-fea5-49bc-816d-11160a572197',
-    priceNew: 299.43,
-    priceOld: '$534,33',
-    sale: '24% Off',
-  },
-  {
-    id: '8',
-    title: 'FS - Nike Air Max 270 React...',
-    imageURL:
-      'https://firebasestorage.googleapis.com/v0/b/app-shoes-6fd12.appspot.com/o/product_8.png?alt=media&token=d6f06ac3-b901-480b-8715-4ee799085f97',
-    priceNew: 299.43,
-    priceOld: '$534,33',
-    sale: '24% Off',
-  },
-];
-
-const dataProduct = [
-  {
-    id: '1',
-    title: 'Nike Air Max 270 React ENG',
-    imageURL:
-      'https://firebasestorage.googleapis.com/v0/b/app-shoes-6fd12.appspot.com/o/product_1.png?alt=media&token=5016789f-2ee6-41a2-8c21-30539c43f018',
-    priceNew: 299.43,
-    priceOld: '$534,33',
-    sale: '24% Off',
-  },
-  {
-    id: '2',
-    title: 'Nike Air Max 270 React ENG',
-    imageURL:
-      'https://firebasestorage.googleapis.com/v0/b/app-shoes-6fd12.appspot.com/o/product_2.png?alt=media&token=6eadece2-77cb-492a-895f-4ce34eae226e',
-    priceNew: 299.43,
-    priceOld: '$534,33',
-    sale: '24% Off',
-  },
-  {
-    id: '3',
-    title: 'Nike Air Max 270 React ENG',
-    imageURL:
-      'https://firebasestorage.googleapis.com/v0/b/app-shoes-6fd12.appspot.com/o/product_3.png?alt=media&token=582ab2ea-7ba0-463b-9f8b-4fea09e800af',
-    priceNew: 299.43,
-    priceOld: '$534,33',
-    sale: '24% Off',
-  },
-  {
-    id: '4',
-    title: 'Nike Air Max 270 React ENG',
-    imageURL:
-      'https://firebasestorage.googleapis.com/v0/b/app-shoes-6fd12.appspot.com/o/product_4.png?alt=media&token=9ff64334-a8d3-4160-ac60-9212999e7e26',
-    priceNew: 299.43,
-    priceOld: '$534,33',
-    sale: '24% Off',
-  },
-  {
-    id: '5',
-    title: 'Nike Air Max 270 React ENG',
-    imageURL:
-      'https://firebasestorage.googleapis.com/v0/b/app-shoes-6fd12.appspot.com/o/product_5.png?alt=media&token=ee189fce-b36a-4402-8930-cd3b46196f49',
-    priceNew: 299.43,
-    priceOld: '$534,33',
-    sale: '24% Off',
-  },
-  {
-    id: '6',
-    title: 'Nike Air Max 270 React ENG',
-    imageURL:
-      'https://firebasestorage.googleapis.com/v0/b/app-shoes-6fd12.appspot.com/o/product_6.png?alt=media&token=16fcc93a-a2d2-4f1d-95b7-ce481e17914b',
-    priceNew: 299.43,
-    priceOld: '$534,33',
-    sale: '24% Off',
-  },
-  {
-    id: '7',
-    title: 'Nike Air Max 270 React ENG',
-    imageURL:
-      'https://firebasestorage.googleapis.com/v0/b/app-shoes-6fd12.appspot.com/o/product_7.png?alt=media&token=1b0ac462-fea5-49bc-816d-11160a572197',
-    priceNew: 299.43,
-    priceOld: '$534,33',
-    sale: '24% Off',
-  },
-  {
-    id: '8',
-    title: 'Nike Air Max 270 React ENG',
-    imageURL:
-      'https://firebasestorage.googleapis.com/v0/b/app-shoes-6fd12.appspot.com/o/product_8.png?alt=media&token=d6f06ac3-b901-480b-8715-4ee799085f97',
-    priceNew: 299.43,
-    priceOld: '$534,33',
-    sale: '24% Off',
   },
 ];

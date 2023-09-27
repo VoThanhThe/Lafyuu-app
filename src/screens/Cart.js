@@ -2,23 +2,16 @@ import {
     StyleSheet,
     Text,
     View,
-    Image,
     TextInput,
-    FlatList,
-    Pressable,
     ScrollView,
     TouchableOpacity
 } from 'react-native'
 import React, { useState } from 'react'
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
-import Feather from 'react-native-vector-icons/Feather'
-import Icon2 from 'react-native-vector-icons/Ionicons'
 import ItemCart from '../item_screen/ItemCart'
 import { useDispatch, useSelector } from 'react-redux'
 
 const Cart = () => {
     const cartData = useSelector(state => state.Reducers);
-    const dispatch = useDispatch();
     console.log("Data List: ", cartData);
     console.log("Data length: ", cartData.length);
     var shipPrice = 40.00;

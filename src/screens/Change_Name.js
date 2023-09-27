@@ -1,9 +1,6 @@
-import { StyleSheet, Text, View, Image, TextInput, FlatList, Pressable, ScrollView, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native'
 import React, {useState} from 'react'
-import Icon from 'react-native-vector-icons/FontAwesome'
-import Icon1 from 'react-native-vector-icons/Feather'
 import Icon2 from 'react-native-vector-icons/Ionicons'
-import Icon3 from 'react-native-vector-icons/MaterialIcons'
 
 const Change_Name = (props) => {
     const {navigation} = props;

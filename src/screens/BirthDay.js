@@ -1,9 +1,7 @@
-import { StyleSheet, Text, View, Image, TextInput, FlatList, Pressable, ScrollView, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Icon from 'react-native-vector-icons/FontAwesome';
 
 const BirthDay = (props) => {
     const [birthday, setbirthday] = useState("23/04/2003");
