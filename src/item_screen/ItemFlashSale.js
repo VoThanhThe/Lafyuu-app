@@ -5,13 +5,13 @@ const ItemFlashSale = (props) => {
     const {data, navigation} = props;
   return (
     <TouchableOpacity style = {styles.container}
-    onPress={() => navigation.navigate('ProductDetail', {data})}> 
-      <Image style = {styles.image} source={{uri : data.imageURL}}/>
-      <Text style = {styles.title}>{data.title}</Text>
-      <Text style = {styles.priceNew}>${data.priceNew}</Text>
+    onPress={() => navigation.push('ProductDetail', {data})}> 
+      <Image style = {styles.image} source={{uri : data.image}}/>
+      <Text style = {styles.title}>{data.name}</Text>
+      <Text style = {styles.priceNew}>${data.price}</Text>
       <View style = {styles.groupView}>
-        <Text style = {styles.priceOld}>{data.priceOld}</Text>
-        <Text style = {styles.sale}>{data.sale}</Text>
+        <Text style = {styles.priceOld}>$534,22</Text>
+        <Text style = {styles.sale}>24% Off</Text>
       </View>
     </TouchableOpacity>
   )

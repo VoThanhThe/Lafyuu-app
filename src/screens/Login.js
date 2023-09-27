@@ -6,17 +6,17 @@ import {
   TextInput,
   Pressable,
   TouchableOpacity,
+  ToastAndroid,
 } from 'react-native';
 import React, { useContext, useState } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon1 from 'react-native-vector-icons/Feather';
 import { AppContext } from '../ultil/AppContext';
 import { validaEmpty, validaEmail, validaPassword } from "../constants/validation";
-import { users } from "../data/Data";
-import { ToastAndroid } from 'react-native';
+import AxiosIntance from '../ultil/AxiosIntance';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
-const Login = props => {
+const Login = (props) => {
   const { isLogin, setisLogin } = useContext(AppContext);
   const { navigation } = props;
 
@@ -25,7 +25,7 @@ const Login = props => {
 
   const [errEmail, setErrEmail] = useState(true);
   const [errPassword, setErrPassword] = useState(true);
-  const click = () => {
+  const click = async () => {
     let result = {
       emai: email,
       password: password,
@@ -52,7 +52,20 @@ const Login = props => {
 
     if (validaEmail(email) && validaPassword(password)) {
       console.log(result);
-      setisLogin(true);
+      try {
+        const response = await AxiosIntance().post("/api/user/login", { email: email, password: password });
+        console.log("Result: ",response);
+        if (response.returnData.error == false) {
+          console.log(response.token);
+          await AsyncStorage.setItem("token", response.token);
+          ToastAndroid.show('Đăng nhập thành công!', ToastAndroid.SHORT);
+          setisLogin(true);
+        } else {
+          ToastAndroid.show('Đăng nhập thất bại!', ToastAndroid.SHORT);
+        }
+      } catch (e) {
+        console.log(e);
+      }
     }
 
   };
@@ -88,20 +101,20 @@ const Login = props => {
         ]}>
         OR
       </Text>
-      <ToastAndroid style={styles.buttonSocial}>
+      <TouchableOpacity style={styles.buttonSocial}>
         <Text style={styles.textButtonSocial}>Login with Google</Text>
         <Image
           style={styles.imageGG}
           source={require('../assets/Google.png')}
         />
-      </ToastAndroid>
-      <ToastAndroid style={styles.buttonSocial}>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.buttonSocial}>
         <Text style={styles.textButtonSocial}>Login with facebook</Text>
         <Image
           style={styles.imageFace}
           source={require('../assets/Facebook.png')}
         />
-      </ToastAndroid>
+      </TouchableOpacity>
 
       <Text style={[styles.header, { color: '#40BFFF' }]}>Forgot Password?</Text>
       <View style={styles.viewFooter}>

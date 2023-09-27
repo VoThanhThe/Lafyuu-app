@@ -14,6 +14,8 @@ import {
   removeFromWishlist
 } from '../redux2/actions/Actions'
 
+import AxiosIntance from '../ultil/AxiosIntance';
+
 const dataSize = [
   {
     id: '1',
@@ -169,18 +171,33 @@ const ProductDetail = (props) => {
   const { params } = route;
   const { data } = params;
 
-  const [isAddWishlist, setIsAddWishlist] = useState(false);
+  console.log("Data id: ", data);
 
-  const isWishlist = () => {
-    if (isAddWishlist) {
-      
-    }
-  }
+  const [isAddWishlist, setIsAddWishlist] = useState(false);
+  const [dataProduct, setDataProduct] = useState([]);
 
   const dispatch = useDispatch();
 
   const items = useSelector(state => state);
   console.log(items);
+
+  useEffect(() => {
+    const getNews = async () => {
+        const response = await AxiosIntance().get("/api/product");
+        console.log(response);
+        if (response.returnData.error == false) {
+          setDataProduct(response.products);
+            ToastAndroid.show("Lấy dữ liệu thành công", ToastAndroid.SHORT);
+        } else {
+            ToastAndroid.show("Lấy dữ liệu thất bại", ToastAndroid.SHORT);
+        }
+    }
+    getNews();
+    return () => {
+
+    }
+}, []);
+
   return (
 
     <View style={styles.container}>
@@ -191,7 +208,7 @@ const ProductDetail = (props) => {
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <Ionicons name="chevron-back" color="#9098B1" size={20} />
           </TouchableOpacity>
-          <Text style={styles.textHeader}>Nike Air Max 270 Rea...</Text>
+          <Text style={styles.textHeader}>{data.name}</Text>
         </View>
         <View style={{ flexDirection: 'row' }}>
           <Icon name="search" color="#9098B1" size={20} />
@@ -202,7 +219,7 @@ const ProductDetail = (props) => {
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Image Detail */}
 
-        <Image style={styles.image} resizeMode='cover' source={{ uri: data.imageURL }} />
+        <Image style={styles.image} resizeMode='cover' source={{ uri: data.image }} />
         <View style={{ justifyContent: 'center', alignItems: 'center', padding: 16 }}>
           <View style={styles.groupButton}>
             <Text style={styles.buttonBannel}></Text>
@@ -216,7 +233,7 @@ const ProductDetail = (props) => {
         <View style={{ paddingHorizontal: 16 }}>
           {/* Start Title */}
           <View style={styles.groupTitle}>
-            <Text style={styles.title}>{data.title}</Text>
+            <Text style={styles.title}>{data.name}</Text>
             <TouchableOpacity onPress={() => {setIsAddWishlist(true) ,dispatch(addToWishlist(data))}}>
               {/* <Feather name="heart" color="#9098B1" size={18} /> */}
               {
@@ -243,7 +260,7 @@ const ProductDetail = (props) => {
           {/* 5 Star */}
 
           {/* Price */}
-          <Text style={styles.price}>${data.priceNew}</Text>
+          <Text style={styles.price}>${data.price}</Text>
           {/* Price */}
 
           {/* Select Size */}
@@ -337,9 +354,9 @@ const ProductDetail = (props) => {
           {/* You Might Also Like */}
           <Text style={styles.titleItem}>You Might Also Like</Text>
           <FlatList style={{ marginVertical: 12 }}
-            data={dataFlashSale}
+            data={dataProduct}
             renderItem={({ item }) => <ItemFlashSale data={item} navigation={navigation} />}
-            keyExtractor={item => item.id}
+            keyExtractor={item => item._id}
             horizontal={true}
             showsHorizontalScrollIndicator={false}
           />

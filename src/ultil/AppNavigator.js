@@ -48,7 +48,7 @@ const Tab = createBottomTabNavigator();
 const User = () => {
   return (
     <Stack.Navigator
-      initialRouteName="Register"
+      initialRouteName="Login"
       screenOptions={{headerShown: false}}>
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Register" component={Register} />
@@ -157,7 +157,7 @@ const BottomTab = () => {
 };
 const AppNavigator = () => {
   const {isLogin} = useContext(AppContext);
-  return <>{isLogin == true ? <User /> : <BottomTab />}</>;
+  return <>{isLogin == true ? <BottomTab /> : <User />}</>;
 };
 
 export default AppNavigator;

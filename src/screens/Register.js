@@ -6,6 +6,7 @@ import {
   TextInput,
   Pressable,
   TouchableOpacity,
+  ToastAndroid
 } from 'react-native';
 import React, { useState } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -14,6 +15,7 @@ import Icon2 from 'react-native-vector-icons/Ionicons';
 
 // import {validaEmpty, validaEmail, validaPassword} from 'constants/validation';
 import { validaEmpty, validaEmail, validaPassword } from "../constants/validation"
+import AxiosIntance from '../ultil/AxiosIntance';
 
 const Register = (props) => {
   const { navigation } = props;
@@ -28,7 +30,7 @@ const Register = (props) => {
   const [errPasswordAgain, setErrPasswordAgain] = useState(true);
 
 
-  const subMit = () => {
+  const subMit = async () => {
     let result = {
       name: name,
       emai: email,
@@ -56,9 +58,9 @@ const Register = (props) => {
     } else if (email.length > 0) {
       if (validaPassword(password)) {
         setErrPassword('');
-      } else if(password.length < 8 && password.length > 20) {
+      } else if (password.length < 8 && password.length > 20) {
         setErrPassword('Mật khẩu từ 8 đến 20 kí tự');
-      }else {
+      } else {
         setErrPassword('Mật khẩu gồm chữ viết hoa, viết thường và số');
       }
     }
@@ -73,9 +75,24 @@ const Register = (props) => {
       }
     }
 
-    if (validaEmail(email) && name.length > 0 && validaPassword(password) &&  validaPassword(passwordAgain)) {
+    if (validaEmail(email) && name.length > 0 && validaPassword(password) && validaPassword(passwordAgain)) {
       console.log(result);
-      navigation.navigate('Login');
+      try {
+        const response = await AxiosIntance()
+          // .post("/users/register",
+          //   { email: emailUser, password: passwordUser });
+          .post("/api/user/register",
+            { name: name, email: email, password: password, confirm_password: passwordAgain });
+
+        if (response.returnData.error == false) {
+          ToastAndroid.show("Đăng ký thành công!", ToastAndroid.SHORT);
+          navigation.navigate('Login');
+        } else {
+          ToastAndroid.show('Đăng ký thất bại!', ToastAndroid.SHORT);
+        }
+      } catch (e) {
+        console.log(e);
+      }
     }
   }
 

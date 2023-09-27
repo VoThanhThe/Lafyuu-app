@@ -7,8 +7,9 @@ import {
   FlatList,
   Button,
   TouchableOpacity,
+  ToastAndroid
 } from 'react-native';
-import React, {useContext, useState} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon1 from 'react-native-vector-icons/Feather';
 import Icon2 from 'react-native-vector-icons/Ionicons';
@@ -17,6 +18,234 @@ import ItemFlashSale from '../item_screen/ItemFlashSale';
 import {ScrollView} from 'react-native-gesture-handler';
 import ItemProduct from '../item_screen/ItemProduct';
 import {AppContext} from '../ultil/AppContext';
+import AxiosIntance from '../ultil/AxiosIntance';
+
+const Home = (props) => {
+  const {navigation} = props;
+  const {isLogin, setisLogin} = useContext(AppContext);
+  const [dataProduct, setDataProduct] = useState([]);
+
+  useEffect(() => {
+    const getNews = async () => {
+        const response = await AxiosIntance().get("/api/product");
+        console.log(response);
+        if (response.returnData.error == false) {
+          setDataProduct(response.products);
+            ToastAndroid.show("Lấy dữ liệu thành công", ToastAndroid.SHORT);
+        } else {
+            ToastAndroid.show("Lấy dữ liệu thất bại", ToastAndroid.SHORT);
+        }
+    }
+    getNews();
+    return () => {
+
+    }
+}, []);
+
+  return (
+    <View style={styles.container}>
+      {/* Start Header */}
+      <View style={styles.groupHeader}>
+        <View style={styles.inputHeader}>
+          <TextInput style={styles.input} placeholder="Search Product" />
+          <Icon style={styles.icon} name="search" color="#40BFFF" size={20} />
+        </View>
+        <Icon1
+          onPress={() => {
+            {
+              navigation.navigate('FavoriteProduct');
+            }
+          }}
+          name="heart"
+          color="#9098B1"
+          size={20}
+        />
+        <Icon2
+          onPress={() => {
+            {
+              navigation.navigate('NotificationStack');
+            }
+          }}
+          name="notifications-outline"
+          color="#9098B1"
+          size={20}
+        />
+      </View>
+      {/* End Header */}
+
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={{padding: 16}}>
+          {/* Bannel 1 */}
+          <TouchableOpacity
+            onPress={() => {
+              {
+                navigation.navigate('Offer');
+              }
+            }}>
+            <Image
+              style={styles.image}
+              source={require('../assets/img_bannel.png')}
+            />
+          </TouchableOpacity>
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              padding: 16,
+            }}>
+            <View style={styles.groupButton}>
+              <Text style={styles.buttonBannel}></Text>
+              <Text style={styles.buttonBannel}></Text>
+              <Text
+                style={[
+                  styles.buttonBannel,
+                  {backgroundColor: '#40BFFF'},
+                ]}></Text>
+              <Text style={styles.buttonBannel}></Text>
+              <Text style={styles.buttonBannel}></Text>
+            </View>
+          </View>
+          {/* Bannel 1 */}
+
+          {/* Start Flatlist Category */}
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}>
+            <Text style={styles.title}>Category</Text>
+            <Text style={[styles.title, {color: '#40BFFF'}]}>
+              More Category
+            </Text>
+          </View>
+
+          <FlatList
+            style={{marginVertical: 12}}
+            data={dataCategory}
+            renderItem={({item}) => <ItemCategory data={item} navigation = {navigation} />}
+            keyExtractor={item => item.id}
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+          />
+          {/* End Flatlist Category */}
+
+          {/* Start Flatlist FlashSale */}
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}>
+            <Text style={styles.title}>Flash Sale</Text>
+            <Text style={[styles.title, {color: '#40BFFF'}]}>See More</Text>
+          </View>
+
+          <FlatList
+            style={{marginVertical: 12}}
+            data={dataProduct}
+            renderItem={({item}) => <ItemFlashSale data={item} navigation = {navigation} />}
+            keyExtractor={item => item._id}
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+          />
+          {/* End Flatlist FlashSale */}
+
+          {/* Start Flatlist MegaSale */}
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}>
+            <Text style={styles.title}>Mega Sale</Text>
+            <Text style={[styles.title, {color: '#40BFFF'}]}>See More</Text>
+          </View>
+
+          <FlatList
+            style={{marginVertical: 12}}
+            data={dataProduct}
+            renderItem={({item}) => <ItemFlashSale data={item} navigation = {navigation} />}
+            keyExtractor={item => item._id}
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+          />
+          {/* End Flatlist MegaSale */}
+          {/* Bannel 2 */}
+          <Image
+            style={styles.image}
+            source={require('../assets/img_bannel_2.png')}
+          />
+          {/* Bannel 2 */}
+          <View style = {{flexDirection: 'row', flexWrap:'wrap', justifyContent: 'space-between'}}>
+            {
+              dataProduct.map((item) => <ItemProduct key={item.id} data = {item} navigation = {navigation} />)
+            }
+          </View>
+          
+        </View>
+      </ScrollView>
+    </View>
+  );
+};
+
+export default Home;
+
+const styles = StyleSheet.create({
+  groupButton: {
+    width: 72,
+    height: 8,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  buttonBannel: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: '#EBF0FF',
+  },
+  groupHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 16,
+    borderBottomColor: '#EBF0FF',
+    borderBottomWidth: 1,
+  },
+  container: {
+    flex: 1,
+    backgroundColor: '#ffffff',
+  },
+  icon: {
+    position: 'absolute',
+    top: 13,
+    left: 18,
+  },
+  input: {
+    width: 290,
+    height: 46,
+    borderWidth: 1,
+    borderColor: '#EBF0FF',
+    backgroundColor: '#ffffff',
+    borderRadius: 5,
+    paddingLeft: 50,
+  },
+  inputHeader: {
+    position: 'relative',
+  },
+  image: {
+    width: '100%',
+    height: 206,
+    borderRadius: 5,
+  },
+  title: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: '#223263',
+    lineHeight: 21.6,
+  },
+});
 
 const dataCategory = [
   {
@@ -246,214 +475,3 @@ const dataProduct = [
     sale: '24% Off',
   },
 ];
-
-const Home = (props) => {
-  const {navigation} = props;
-  const {isLogin, setisLogin} = useContext(AppContext);
-  const click = () => {
-    setisLogin(false);
-  };
-  return (
-    <View style={styles.container}>
-      {/* Start Header */}
-      <View style={styles.groupHeader}>
-        <View style={styles.inputHeader}>
-          <TextInput style={styles.input} placeholder="Search Product" />
-          <Icon style={styles.icon} name="search" color="#40BFFF" size={20} />
-        </View>
-        <Icon1
-          onPress={() => {
-            {
-              navigation.navigate('FavoriteProduct');
-            }
-          }}
-          name="heart"
-          color="#9098B1"
-          size={20}
-        />
-        <Icon2
-          onPress={() => {
-            {
-              navigation.navigate('NotificationStack');
-            }
-          }}
-          name="notifications-outline"
-          color="#9098B1"
-          size={20}
-        />
-      </View>
-      {/* End Header */}
-
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={{padding: 16}}>
-          {/* Bannel 1 */}
-          <TouchableOpacity
-            onPress={() => {
-              {
-                navigation.navigate('Offer');
-              }
-            }}>
-            <Image
-              style={styles.image}
-              source={require('../assets/img_bannel.png')}
-            />
-          </TouchableOpacity>
-          <View
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              padding: 16,
-            }}>
-            <View style={styles.groupButton}>
-              <Text style={styles.buttonBannel}></Text>
-              <Text style={styles.buttonBannel}></Text>
-              <Text
-                style={[
-                  styles.buttonBannel,
-                  {backgroundColor: '#40BFFF'},
-                ]}></Text>
-              <Text style={styles.buttonBannel}></Text>
-              <Text style={styles.buttonBannel}></Text>
-            </View>
-          </View>
-          {/* Bannel 1 */}
-
-          {/* Start Flatlist Category */}
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}>
-            <Text style={styles.title}>Category</Text>
-            <Text style={[styles.title, {color: '#40BFFF'}]}>
-              More Category
-            </Text>
-          </View>
-
-          <FlatList
-            style={{marginVertical: 12}}
-            data={dataCategory}
-            renderItem={({item}) => <ItemCategory data={item} navigation = {navigation} />}
-            keyExtractor={item => item.id}
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-          />
-          {/* End Flatlist Category */}
-
-          {/* Start Flatlist FlashSale */}
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}>
-            <Text style={styles.title}>Flash Sale</Text>
-            <Text style={[styles.title, {color: '#40BFFF'}]}>See More</Text>
-          </View>
-
-          <FlatList
-            style={{marginVertical: 12}}
-            data={dataFlashSale}
-            renderItem={({item}) => <ItemFlashSale data={item} navigation = {navigation} />}
-            keyExtractor={item => item.id}
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-          />
-          {/* End Flatlist FlashSale */}
-
-          {/* Start Flatlist MegaSale */}
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}>
-            <Text style={styles.title}>Mega Sale</Text>
-            <Text style={[styles.title, {color: '#40BFFF'}]}>See More</Text>
-          </View>
-
-          <FlatList
-            style={{marginVertical: 12}}
-            data={dataFlashSale}
-            renderItem={({item}) => <ItemFlashSale data={item} navigation = {navigation} />}
-            keyExtractor={item => item.id}
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-          />
-          {/* End Flatlist MegaSale */}
-          {/* Bannel 2 */}
-          <Image
-            style={styles.image}
-            source={require('../assets/img_bannel_2.png')}
-          />
-          {/* Bannel 2 */}
-          <View style = {{flexDirection: 'row', flexWrap:'wrap', justifyContent: 'space-between'}}>
-            {
-              dataProduct.map((item) => <ItemProduct key={item.id} data = {item} navigation = {navigation} />)
-            }
-          </View>
-          
-        </View>
-      </ScrollView>
-    </View>
-  );
-};
-
-export default Home;
-
-const styles = StyleSheet.create({
-  groupButton: {
-    width: 72,
-    height: 8,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  buttonBannel: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: '#EBF0FF',
-  },
-  groupHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: 16,
-    borderBottomColor: '#EBF0FF',
-    borderBottomWidth: 1,
-  },
-  container: {
-    flex: 1,
-    backgroundColor: '#ffffff',
-  },
-  icon: {
-    position: 'absolute',
-    top: 13,
-    left: 18,
-  },
-  input: {
-    width: 290,
-    height: 46,
-    borderWidth: 1,
-    borderColor: '#EBF0FF',
-    backgroundColor: '#ffffff',
-    borderRadius: 5,
-    paddingLeft: 50,
-  },
-  inputHeader: {
-    position: 'relative',
-  },
-  image: {
-    width: '100%',
-    height: 206,
-    borderRadius: 5,
-  },
-  title: {
-    fontSize: 14,
-    fontWeight: '700',
-    color: '#223263',
-    lineHeight: 21.6,
-  },
-});
