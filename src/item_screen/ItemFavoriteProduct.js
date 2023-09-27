@@ -39,8 +39,8 @@ const ItemFavoriteProduct = (props) => {
 
     return (
         <View style={styles.container}>
-            <Image style={styles.image} source={{ uri: dataProduct.imageURL }} />
-            <Text style={styles.title}>{dataProduct.title}</Text>
+            <Image style={styles.image} source={{ uri: dataProduct.image }} />
+            <Text style={styles.title}>{dataProduct.name}</Text>
             <View style={styles.groupView}>
                 <Icon style={styles.icon} name="star" color="#FFC833" size={12} />
                 <Icon style={styles.icon} name="star" color="#FFC833" size={12} />
@@ -48,14 +48,14 @@ const ItemFavoriteProduct = (props) => {
                 <Icon style={styles.icon} name="star" color="#FFC833" size={12} />
                 <Icon style={styles.icon} name="star" color="#EBF0FF" size={12} />
             </View>
-            <Text style={styles.priceNew}>${dataProduct.priceNew}</Text>
+            <Text style={styles.priceNew}>${dataProduct.price}</Text>
             <View style={styles.groupBottom}>
                 <View style={{
                     flexDirection: 'row',
                     alignItems: 'center',
                 }}>
-                    <Text style={styles.priceOld}>{dataProduct.priceOld}</Text>
-                    <Text style={styles.sale}>{dataProduct.sale}</Text>
+                    <Text style={styles.priceOld}>$534,22</Text>
+                    <Text style={styles.sale}>24% Off</Text>
                 </View>
                 <TouchableOpacity onPress={() => showConfirmDialog()}>
                     <Icon style={styles.icon} name="trash-o" color="#9098B1" size={20} />

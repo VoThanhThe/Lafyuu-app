@@ -179,7 +179,7 @@ const Home = (props) => {
           {/* Bannel 2 */}
           <View style = {{flexDirection: 'row', flexWrap:'wrap', justifyContent: 'space-between'}}>
             {
-              dataProduct.map((item) => <ItemProduct key={item.id} data = {item} navigation = {navigation} />)
+              dataProduct.map((item) => <ItemProduct key={item._id} data = {item} navigation = {navigation} />)
             }
           </View>
           

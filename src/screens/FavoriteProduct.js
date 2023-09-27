@@ -114,7 +114,7 @@ const FavoriteProduct = (props) => {
                     numColumns={2}
                     data={data}
                     renderItem={({ item, index }) => <ItemFavoriteProduct dataProduct={item} index = {index} />}
-                    keyExtractor={item => item.id}
+                    keyExtractor={item => item._id}
                     showsHorizontalScrollIndicator={false}
                     showsVerticalScrollIndicator={false}
                 />

@@ -18,10 +18,10 @@ const ItemCart = (props) => {
     return (
         <View style={styles.container}>
             <View style={styles.group_card}>
-                <Image style={styles.image} source={{ uri: data.imageURL }} />
+                <Image style={styles.image} source={{ uri: data.image }} />
                 <View style={styles.group_right}>
                     <View style={styles.group_right_up}>
-                        <Text style={styles.textName}>{data.title}</Text>
+                        <Text style={styles.textName}>{data.name}</Text>
                         <TouchableOpacity onPress={() => { setIsAddWishlist(true), dispatch(addToWishlist(data)) }}>
                             {
                                 !isAddWishlist ?
@@ -38,7 +38,7 @@ const ItemCart = (props) => {
                         </TouchableOpacity>
                     </View>
                     <View style={styles.group_right_down}>
-                        <Text style={styles.textPrice}>${data.priceNew}</Text>
+                        <Text style={styles.textPrice}>${data.price}</Text>
                         <View style={styles.group_button}>
                             <TouchableOpacity >
                                 <View style={styles.viewButtonQuantity}>

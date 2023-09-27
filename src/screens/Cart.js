@@ -26,8 +26,9 @@ const Cart = () => {
     var tong = 0;
     const sumPrice = (cartData) => {
         for (let index = 0; index < cartData.length; index++) {
-            tong += cartData[index].priceNew;
+            tong += cartData[index].price;
         }
+        console.log("Tong;: ", tong)
         return tong;
     }
 
@@ -48,7 +49,7 @@ const Cart = () => {
             <ScrollView showsHorizontalScrollIndicator={false}>
                 <View style={{ paddingHorizontal: 16 }}>
                     {
-                        cartData.map((item, index) => <ItemCart key={item.id} data={item} index = {index} />)
+                        cartData.map((item, index) => <ItemCart key={item._id} data={item} index = {index} />)
                     }
 
                     <View style={styles.inputHeader}>
