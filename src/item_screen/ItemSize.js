@@ -1,12 +1,12 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 
 const ItemSize = (props) => {
-    const {dataSize} = props;
+    const {dataSize, onPress, borderColor} = props;
     return (
-        <View style = {styles.container}>
+        <TouchableOpacity style = {[styles.container,{borderColor: borderColor,}]} onPress={onPress}>
             <Text style = {styles.text}>{dataSize.number}</Text>
-        </View>
+        </TouchableOpacity>
     )
 }
 
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
         width: 48,
         height: 48,
         borderRadius: 24,
-        borderWidth: 1,
+        borderWidth: 2,
         borderColor: '#EBF0FF',
         backgroundColor: '#ffffff',
         marginEnd: 16,

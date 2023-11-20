@@ -1,11 +1,14 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 
 const ItemColor = (props) => {
-    const {dataColor} = props
+    const {dataColor, onPress, backgroundColor, borderRadius, width, height} = props
   return (
-    <View style = {[styles.container, {backgroundColor: dataColor.color}]}>
-    </View>
+    <TouchableOpacity 
+    style = {[styles.container, {backgroundColor: dataColor.color, justifyContent: "center", alignItems: "center"}]}
+    onPress={onPress}>
+      <View style = {{backgroundColor: backgroundColor,width: width, height: height, borderRadius: borderRadius, }}></View>
+    </TouchableOpacity>
   )
 }
 

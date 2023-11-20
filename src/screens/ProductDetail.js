@@ -14,96 +14,49 @@ import {
 
 import AxiosIntance from '../ultil/AxiosIntance';
 import LoadingScreen from './LoadingScreen'
+import { dataColor, dataSize } from '../data/Data'
 
-const dataSize = [
-  {
-    id: '1',
-    number: '35',
-  },
-  {
-    id: '2',
-    number: '36',
-  },
-  {
-    id: '3',
-    number: '37',
-  },
-  {
-    id: '4',
-    number: '38',
-  },
-  {
-    id: '5',
-    number: '39',
-  },
-  {
-    id: '6',
-    number: '40',
-  },
-  {
-    id: '7',
-    number: '41',
-  },
-  {
-    id: '8',
-    number: '42',
-  },
-  {
-    id: '9',
-    number: '43',
-  },
-  {
-    id: '10',
-    number: '44',
-  },
-  {
-    id: '11',
-    number: '45',
-  },
-
-]
-const dataColor = [
-  {
-    id: '1',
-    color: "#FFC833",
-  },
-  {
-    id: '2',
-    color: "#40BFFF",
-  },
-  {
-    id: '3',
-    color: "#FB7181",
-  },
-  {
-    id: '4',
-    color: "#53D1B6",
-  },
-  {
-    id: '5',
-    color: "#5C61F4",
-  },
-  {
-    id: '6',
-    color: "#223263",
-  },
-
-]
 const ProductDetail = (props) => {
   const { navigation, route } = props;
-  const { params } = route;
-  const { data } = params;
+  const { data } = route.params;
 
   console.log("Data id: ", data);
   const [isLoading, setIsLoading] = useState(true);
-
+  const [selectedIdSize, setSelectedIdSize] = useState('2');
+  const [selectedIdColor, setSelectedIdColor] = useState('1');
   const [isAddWishlist, setIsAddWishlist] = useState(false);
   const [dataProduct, setDataProduct] = useState([]);
 
   const dispatch = useDispatch();
 
-  const items = useSelector(state => state);
-  console.log(items);
+  const itemWishlist = useSelector((state) => state.ReducersWishlist);
+  console.log(itemWishlist);
+
+  const renderItemSize = ({ item }) => {
+    const borderColor = item.id === selectedIdSize ? "#40BFFF" : '#EBF0FF';
+    return (
+      <ItemSize
+        dataSize={item}
+        onPress={() => setSelectedIdSize(item.id)}
+        borderColor={borderColor} />
+    );
+  };
+
+  const renderItemColor = ({ item }) => {
+    const backgroundColor = item.id === selectedIdColor ? "#ffffff" : "black";
+    const borderRadius = item.id === selectedIdColor ? 12 : 12;
+    const width = item.id === selectedIdColor ? 24 : 0;
+    const height = item.id === selectedIdColor ? 24 : 0;
+    return (
+      <ItemColor
+        dataColor={item}
+        onPress={() => setSelectedIdColor(item.id)}
+        backgroundColor={backgroundColor}
+        borderRadius={borderRadius}
+        width={width}
+        height={height} />
+    );
+  };
 
   useEffect(() => {
     const getNews = async () => {
@@ -195,11 +148,12 @@ const ProductDetail = (props) => {
                 <Text style={styles.titleItem}>Select Size</Text>
                 <FlatList
                   data={dataSize}
-                  renderItem={({ item }) => <ItemSize dataSize={item} />}
+                  renderItem={renderItemSize}
                   keyExtractor={item => item.id}
                   showsHorizontalScrollIndicator={false}
                   showsVerticalScrollIndicator={false}
                   horizontal={true}
+                  extraData={selectedIdSize}
                 />
                 {/* Select Size */}
 
@@ -207,11 +161,12 @@ const ProductDetail = (props) => {
                 <Text style={styles.titleItem}>Select Color</Text>
                 <FlatList
                   data={dataColor}
-                  renderItem={({ item }) => <ItemColor dataColor={item} />}
+                  renderItem={renderItemColor}
                   keyExtractor={item => item.id}
                   showsHorizontalScrollIndicator={false}
                   showsVerticalScrollIndicator={false}
                   horizontal={true}
+                  extraData={selectedIdColor}
                 />
                 {/* Select Color */}
 
