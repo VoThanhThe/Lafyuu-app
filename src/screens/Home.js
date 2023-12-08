@@ -23,6 +23,14 @@ const Home = (props) => {
   const { navigation } = props;
   const [dataProduct, setDataProduct] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  const images = [
+    require('../assets/img_bannel.png'),
+    require('../assets/img_bannel_2.png'),
+    require('../assets/banner_3.png'),
+    require('../assets/banner_4.jpg'),
+    require('../assets/banner_5.jpg'),
+  ]
   useEffect(() => {
     const getNews = async () => {
       const response = await AxiosIntance().get("/api/product");
@@ -118,9 +126,11 @@ const Home = (props) => {
                     alignItems: 'center',
                   }}>
                   <Text style={styles.title}>Category</Text>
-                  <Text style={[styles.title, { color: '#40BFFF' }]}>
-                    More Category
-                  </Text>
+                  <TouchableOpacity onPress={() => navigation.navigate('Explore')}>
+                    <Text style={[styles.title, { color: '#40BFFF' }]}>
+                      More Category
+                    </Text>
+                  </TouchableOpacity>
                 </View>
 
                 <FlatList

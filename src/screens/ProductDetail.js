@@ -268,7 +268,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#ffffff',
-
+    paddingBottom: 25
   },
   groupTitle: {
     flexDirection: 'row',

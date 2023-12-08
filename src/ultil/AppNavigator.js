@@ -1,6 +1,5 @@
 import {StyleSheet, Text, View} from 'react-native';
-import React, {useContext} from 'react';
-import {NavigationContainer} from '@react-navigation/native';
+import React, {useContext, useState} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Home from '../screens/Home';
@@ -11,10 +10,7 @@ import Explore from '../screens/Explore';
 import Cart from '../screens/Cart';
 import OfferScreen from '../screens/OfferScreen';
 import {AppContext} from './AppContext';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import Icon1 from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Icon3 from 'react-native-vector-icons/MaterialIcons';
 import Offer from '../screens/Offer';
 import ProductDetail from '../screens/ProductDetail';
 import Notification from '../screens/Notification';
@@ -114,6 +110,8 @@ const AccountStack = () => {
 };
 
 const BottomTab = () => {
+  const cartData = useSelector(state => state.Reducers);
+  const [quantity, setQuantity] = useState(cartData.length);
   return (
     <Tab.Navigator
       screenOptions={({route}) => ({
@@ -145,7 +143,7 @@ const BottomTab = () => {
       })}>
       <Tab.Screen name="Home" component={HomeStack} title='Home' />
       <Tab.Screen name="Explore" component={Explore} />
-      <Tab.Screen name="Cart" component={Cart} options={{tabBarBadge: 2}} />
+      <Tab.Screen name="Cart" component={Cart} options={{tabBarBadge: cartData.length}} />
       <Tab.Screen
         name="OfferScreen"
         component={OfferScreen}

@@ -9,8 +9,9 @@ import {
 import React, { useState } from 'react'
 import ItemCart from '../item_screen/ItemCart'
 import { useDispatch, useSelector } from 'react-redux'
-
-const Cart = () => {
+import Ionicons from 'react-native-vector-icons/Ionicons';
+const Cart = (props) => {
+    const {navigation} = props;
     const cartData = useSelector(state => state.Reducers);
     console.log("Data List: ", cartData);
     console.log("Data length: ", cartData.length);
@@ -28,58 +29,78 @@ const Cart = () => {
     const totalPrice = () => {
         return tong + shipPrice + changesPrice;
     }
-    
-    
+
+
     //set data
     // setQuantityProduct(cartData.length);
     return (
-        <View style={styles.container}>
-            {/* Start Header */}
-            <View style={styles.groupHeader}>
-                <Text style={styles.header}>Your Cart</Text>
-            </View>
-            {/* End Header */}
-            <ScrollView showsHorizontalScrollIndicator={false}>
-                <View style={{ paddingHorizontal: 16 }}>
-                    {
-                        cartData.map((item, index) => <ItemCart key={item._id} data={item} index = {index} />)
-                    }
-
-                    <View style={styles.inputHeader}>
-                        <TextInput style={styles.input} placeholder='Enter Cupon Code' />
-                        <TouchableOpacity style={styles.button}>
-                            <Text style={styles.textButton}>Apply</Text>
-                        </TouchableOpacity>
-                    </View>
-
-                    <View style={{ padding: 16, borderWidth: 1, borderColor: '#EBF0FF', borderRadius: 5, marginTop: 16 }}>
-                        <View style={[styles.viewFlex, { marginBottom: 12 }]}>
-                            <Text style={styles.textItemLeft}>Items ({cartData.length})</Text>
-                            <Text style={styles.textItemRight}>${sumPrice(cartData)}</Text>
-                        </View>
-                        <View style={[styles.viewFlex, { marginBottom: 12 }]}>
-                            <Text style={styles.textItemLeft}>Shipping</Text>
-                            <Text style={styles.textItemRight}>${shipPrice}</Text>
-                        </View>
-                        <View style={[styles.viewFlex, { marginBottom: 12 }]}>
-                            <Text style={styles.textItemLeft}>Import charges</Text>
-                            <Text style={styles.textItemRight}>${changesPrice}</Text>
-                        </View>
-                        <View style={{ borderWidth: 1, borderStyle: 'dashed', borderColor: '#EBF0FF', marginBottom: 12 }}></View>
-                        <View style={[styles.viewFlex, {}]}>
-                            <Text style={[styles.textItemLeft, { fontWeight: '700', color: '#223263', }]}>Total Price</Text>
-                            <Text style={[styles.textItemRight, { fontWeight: '700', color: '#40BFFF', }]}>${totalPrice()}</Text>
-                        </View>
-                    </View>
-
-                    <TouchableOpacity style={styles.buttonCheckOut}>
-                        <Text style={styles.textButtonCheckOut}>Check Out</Text>
+        <>
+            {
+                cartData.length == 0 ? 
+                (<View style = {{flex: 1, backgroundColor: "#ffffff", justifyContent: "center", alignItems: 'center', paddingHorizontal: 16}}>
+                    <Ionicons name='close-circle' size={100} color={"#40BFFF"} />
+                    <Text style={{fontSize: 26, fontWeight: "700", color: "#223263", marginTop: 16}}>Product Not Found</Text>
+                    <Text style={{fontSize: 14, fontWeight: "400", color: "#9098B1", marginTop: 8}}>thank you for shopping using lafyuu</Text>
+                    <TouchableOpacity 
+                    onPress={() => navigation.navigate('Home')}
+                    style = {{backgroundColor: "#40BFFF", width: '100%', height: 57, borderRadius: 5, marginTop: 16}}
+                    >
+                        <Text style={{fontSize: 18, fontWeight: "700", color: "#ffffff", lineHeight: 57, textAlign: "center", }}>Back to Home</Text>
                     </TouchableOpacity>
-                </View>
+                </View>) 
+                :
+                    (
+                        <View style={styles.container}>
+                            {/* Start Header */}
+                            <View style={styles.groupHeader}>
+                                <Text style={styles.header}>Your Cart</Text>
+                            </View>
+                            {/* End Header */}
+                            <ScrollView showsHorizontalScrollIndicator={false}>
+                                <View style={{ paddingHorizontal: 16 }}>
+                                    {
+                                        cartData.map((item, index) => <ItemCart key={item._id} data={item} index={index} />)
+                                    }
+
+                                    <View style={styles.inputHeader}>
+                                        <TextInput style={styles.input} placeholder='Enter Cupon Code' />
+                                        <TouchableOpacity style={styles.button}>
+                                            <Text style={styles.textButton}>Apply</Text>
+                                        </TouchableOpacity>
+                                    </View>
+
+                                    <View style={{ padding: 16, borderWidth: 1, borderColor: '#EBF0FF', borderRadius: 5, marginTop: 16 }}>
+                                        <View style={[styles.viewFlex, { marginBottom: 12 }]}>
+                                            <Text style={styles.textItemLeft}>Items ({cartData.length})</Text>
+                                            <Text style={styles.textItemRight}>${sumPrice(cartData)}</Text>
+                                        </View>
+                                        <View style={[styles.viewFlex, { marginBottom: 12 }]}>
+                                            <Text style={styles.textItemLeft}>Shipping</Text>
+                                            <Text style={styles.textItemRight}>${shipPrice}</Text>
+                                        </View>
+                                        <View style={[styles.viewFlex, { marginBottom: 12 }]}>
+                                            <Text style={styles.textItemLeft}>Import charges</Text>
+                                            <Text style={styles.textItemRight}>${changesPrice}</Text>
+                                        </View>
+                                        <View style={{ borderWidth: 1, borderStyle: 'dashed', borderColor: '#EBF0FF', marginBottom: 12 }}></View>
+                                        <View style={[styles.viewFlex, {}]}>
+                                            <Text style={[styles.textItemLeft, { fontWeight: '700', color: '#223263', }]}>Total Price</Text>
+                                            <Text style={[styles.textItemRight, { fontWeight: '700', color: '#40BFFF', }]}>${totalPrice()}</Text>
+                                        </View>
+                                    </View>
+
+                                    <TouchableOpacity style={styles.buttonCheckOut}>
+                                        <Text style={styles.textButtonCheckOut}>Check Out</Text>
+                                    </TouchableOpacity>
+                                </View>
 
 
-            </ScrollView>
-        </View>
+                            </ScrollView>
+                        </View>
+                    )
+        }
+        </>
+
     )
 }
 
