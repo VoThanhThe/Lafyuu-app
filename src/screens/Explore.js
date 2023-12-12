@@ -5,6 +5,7 @@ import Icon1 from 'react-native-vector-icons/Feather'
 import Icon2 from 'react-native-vector-icons/Ionicons'
 import ItemGengerExplore from '../item_screen/ItemGengerExplore'
 import AxiosIntance from '../ultil/AxiosIntance';
+import LoadingScreen from './LoadingScreen';
 
 const Explore = (props) => {
     const { navigation } = props;
@@ -42,38 +43,49 @@ const Explore = (props) => {
     }, []);
     return (
         <View style={styles.container}>
-            {/* Start Header */}
-            <View style={styles.groupHeader}>
-                <View style={styles.inputHeader}>
-                    <TextInput style={styles.input} placeholder='Search Product' />
-                    <Icon style={styles.icon} name="search" color="#40BFFF" size={20} />
-                </View>
+            {
+                isLoading ?
+                    (
+                        <LoadingScreen />
+                    ) :
+                    (
+                        <View>
+                            {/* Start Header */}
+                            <View style={styles.groupHeader}>
+                                <View style={styles.inputHeader}>
+                                    <TextInput style={styles.input} placeholder='Search Product' />
+                                    <Icon style={styles.icon} name="search" color="#40BFFF" size={20} />
+                                </View>
 
-                <Icon1 onPress={() => { { navigation.navigate('FavoriteProduct') } }} name="heart" color="#9098B1" size={20} />
-                <Icon2 onPress={() => { { navigation.navigate('NotificationStack') } }} name="notifications-outline" color="#9098B1" size={20} />
+                                <Icon1 onPress={() => { { navigation.navigate('FavoriteProduct') } }} name="heart" color="#9098B1" size={20} />
+                                <Icon2 onPress={() => { { navigation.navigate('NotificationStack') } }} name="notifications-outline" color="#9098B1" size={20} />
 
-            </View>
-            {/* End Header */}
-            <ScrollView showsVerticalScrollIndicator={false}>
-                <View style={{ padding: 12 }}>
-                    {/* Start Flatlist Category */}
-                    <Text style={styles.title}>Man Fashion</Text>
+                            </View>
+                            {/* End Header */}
+                            <ScrollView showsVerticalScrollIndicator={false}>
+                                <View style={{ padding: 12 }}>
+                                    {/* Start Flatlist Category */}
+                                    <Text style={styles.title}>Man Fashion</Text>
 
-                    <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-                        {
-                            dataCategoryMan.map((item) => <ItemGengerExplore key={item._id} dataIcon={item} />)
-                        }
-                    </View>
+                                    <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+                                        {
+                                            dataCategoryMan.map((item) => <ItemGengerExplore key={item._id} dataIcon={item} />)
+                                        }
+                                    </View>
 
-                    <Text style={styles.title}>Woman Fashion</Text>
+                                    <Text style={styles.title}>Woman Fashion</Text>
 
-                    <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-                        {
-                            dataCategoryWomen.map((item) => <ItemGengerExplore key={item._id} dataIcon={item} />)
-                        }
-                    </View>
-                </View>
-            </ScrollView>
+                                    <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+                                        {
+                                            dataCategoryWomen.map((item) => <ItemGengerExplore key={item._id} dataIcon={item} />)
+                                        }
+                                    </View>
+                                </View>
+                            </ScrollView>
+                        </View>
+                    )
+            }
+
         </View>
     )
 }
