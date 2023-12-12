@@ -39,7 +39,7 @@ const ItemFavoriteProduct = (props) => {
 
     return (
         <View style={styles.container}>
-            <Image style={styles.image} source={{ uri: dataProduct.image }} />
+            <Image style={styles.image} resizeMode='contain' source={{ uri: dataProduct.image }} />
             <Text style={styles.title}>{dataProduct.name}</Text>
             <View style={styles.groupView}>
                 <Icon style={styles.icon} name="star" color="#FFC833" size={12} />

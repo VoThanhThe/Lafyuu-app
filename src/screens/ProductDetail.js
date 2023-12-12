@@ -89,7 +89,9 @@ const ProductDetail = (props) => {
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                   <Ionicons name="chevron-back" color="#9098B1" size={20} />
                 </TouchableOpacity>
-                <Text style={styles.textHeader}>{data.name}</Text>
+                <Text style={styles.textHeader}>{
+                  data?.name.length > 30 ? (data?.name).slice(0,30) + "..." : data?.name
+                }</Text>
               </View>
               <View style={{ flexDirection: 'row' }}>
                 <Icon name="search" color="#9098B1" size={20} />
@@ -100,7 +102,7 @@ const ProductDetail = (props) => {
             <ScrollView showsVerticalScrollIndicator={false}>
               {/* Image Detail */}
 
-              <Image style={styles.image} resizeMode='cover' source={{ uri: data.image }} />
+              <Image style={styles.image} resizeMode='contain' source={{ uri: data.image }} />
               <View style={{ justifyContent: 'center', alignItems: 'center', padding: 16 }}>
                 <View style={styles.groupButton}>
                   <Text style={styles.buttonBannel}></Text>

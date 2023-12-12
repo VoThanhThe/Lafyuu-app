@@ -13,8 +13,18 @@ const ItemCart = (props) => {
     const dispatch = useDispatch();
     const { data, index } = props;
     const [isAddWishlist, setIsAddWishlist] = useState(false);
-    var number = 1;
-    const [quantity, setQuantity] = useState(number);
+    const [quantity, setQuantity] = useState(1);
+
+    const increaseQuantity = () => {
+        setQuantity(quantity + 1);
+      };
+    
+      const decreaseQuantity = () => {
+        if (quantity > 1) {
+          setQuantity(quantity - 1);
+        }
+      };
+    
 
     const showConfirmDialog = () => {
         return Alert.alert(
@@ -63,7 +73,7 @@ const ItemCart = (props) => {
                     <View style={styles.group_right_down}>
                         <Text style={styles.textPrice}>${data.price}</Text>
                         <View style={styles.group_button}>
-                            <TouchableOpacity >
+                            <TouchableOpacity onPress={() => {decreaseQuantity()}}>
                                 <View style={styles.viewButtonQuantity}>
                                     <FontAwesome style={styles.icon} name="minus" color="#9098B1" size={15} />
                                 </View>
@@ -71,7 +81,7 @@ const ItemCart = (props) => {
                             <View style={[styles.viewButtonQuantity, { width: 40, backgroundColor: '#EBF0FF' }]}>
                                 <Text style={styles.textQuantity}>{quantity}</Text>
                             </View>
-                            <TouchableOpacity >
+                            <TouchableOpacity onPress={() => {increaseQuantity()}}>
                                 <View style={styles.viewButtonQuantity}>
                                     <FontAwesome style={styles.icon} name="plus" color="#9098B1" size={15} />
                                 </View>

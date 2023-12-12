@@ -8,9 +8,9 @@ const ItemCategory = (props) => {
     <TouchableOpacity style = {styles.cotainer} 
     onPress={() => navigation.navigate('ProductDetail')}>
       <View style = {styles.circle}>
-        <Image style = {styles.image} resizeMode='contain' source={{uri : data.imageURL}} />
+        <Image style = {styles.image} resizeMode='contain' source={{uri : data.image}} />
       </View>
-      <Text style = {styles.name}>{data.title}</Text>
+      <Text style = {styles.name}>{data.name}</Text>
     </TouchableOpacity>
   )
 }

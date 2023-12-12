@@ -111,7 +111,6 @@ const AccountStack = () => {
 
 const BottomTab = () => {
   const cartData = useSelector(state => state.Reducers);
-  const [quantity, setQuantity] = useState(cartData.length);
   return (
     <Tab.Navigator
       screenOptions={({route}) => ({
@@ -135,10 +134,10 @@ const BottomTab = () => {
         },
         tabBarActiveTintColor: '#40BFFF',
         tabBarInactiveTintColor: '#4E4B66',
-        tabBarLabelStyle: {
-          fontSize: 14,
-          color: '#4E4B66',
-        },
+        // tabBarLabelStyle: {
+        //   fontSize: 14,
+        //   color: '#4E4B66',
+        // },
         headerShown: false,
       })}>
       <Tab.Screen name="Home" component={HomeStack} title='Home' />

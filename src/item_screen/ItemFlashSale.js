@@ -6,7 +6,7 @@ const ItemFlashSale = (props) => {
   return (
     <TouchableOpacity style = {styles.container}
     onPress={() => navigation.push('ProductDetail', {data})}> 
-      <Image style = {styles.image} source={{uri : data.image}}/>
+      <Image style = {styles.image} source={{uri : data.image}} resizeMode='contain'/>
       <Text style = {styles.title}>{data.name}</Text>
       <Text style = {styles.priceNew}>${data.price}</Text>
       <View style = {styles.groupView}>

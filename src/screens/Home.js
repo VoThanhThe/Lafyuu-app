@@ -22,6 +22,7 @@ import LoadingScreen from './LoadingScreen';
 const Home = (props) => {
   const { navigation } = props;
   const [dataProduct, setDataProduct] = useState([]);
+  const [dataCategory, setDataCategory] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const images = [
@@ -32,7 +33,7 @@ const Home = (props) => {
     require('../assets/banner_5.jpg'),
   ]
   useEffect(() => {
-    const getNews = async () => {
+    const getProducts = async () => {
       const response = await AxiosIntance().get("/api/product");
       console.log(response);
       if (response.returnData.error == false) {
@@ -42,7 +43,19 @@ const Home = (props) => {
         console.log("Lấy dữ liệu thất bại");
       }
     }
-    getNews();
+
+    const getCategories = async () => {
+      const response = await AxiosIntance().get("/api/categories/get-all-categories");
+      console.log(response);
+      if (response.returnData.error == false) {
+        setDataCategory(response.categories);
+        setIsLoading(false);
+      } else {
+        console.log("Lấy dữ liệu thất bại");
+      }
+    }
+    getProducts();
+    getCategories();
     return () => {
 
     }
@@ -137,7 +150,7 @@ const Home = (props) => {
                   style={{ marginVertical: 12 }}
                   data={dataCategory}
                   renderItem={({ item }) => <ItemCategory data={item} navigation={navigation} />}
-                  keyExtractor={item => item.id}
+                  keyExtractor={item => item._id}
                   horizontal={true}
                   showsHorizontalScrollIndicator={false}
                 />
@@ -264,82 +277,82 @@ const styles = StyleSheet.create({
   },
 });
 
-const dataCategory = [
-  {
-    id: '1',
-    title: 'Man Shirt',
-    imageURL:
-      'https://firebasestorage.googleapis.com/v0/b/app-shoes-6fd12.appspot.com/o/ic_man_shirt.png?alt=media&token=ec71fd13-82d1-4f31-b863-f091f8f14ec8',
-  },
-  {
-    id: '2',
-    title: 'Man Work Equipment',
-    imageURL:
-      'https://firebasestorage.googleapis.com/v0/b/app-shoes-6fd12.appspot.com/o/ic_Man%20Work%20Equipment.png?alt=media&token=78574219-2cd5-4f4e-bf4f-25a079df3e0f',
-  },
-  {
-    id: '3',
-    title: 'Man Pants',
-    imageURL:
-      'https://firebasestorage.googleapis.com/v0/b/app-shoes-6fd12.appspot.com/o/ic_Man%20Pants.png?alt=media&token=9c973769-712f-4447-ad1e-9c6b7677c7b6',
-  },
-  {
-    id: '4',
-    title: 'Man Shoes',
-    imageURL:
-      'https://firebasestorage.googleapis.com/v0/b/app-shoes-6fd12.appspot.com/o/ic_Man%20Shoes.png?alt=media&token=f1bf8ed0-0637-48d9-93f2-3e754974c3cb',
-  },
-  {
-    id: '5',
-    title: 'Man Underwear',
-    imageURL:
-      'https://firebasestorage.googleapis.com/v0/b/app-shoes-6fd12.appspot.com/o/ic_Man%20Underwear.png?alt=media&token=9c2a1064-ab52-4d20-9d24-2c1a68547473',
-  },
+// const dataCategory = [
+//   {
+//     id: '1',
+//     title: 'Man Shirt',
+//     imageURL:
+//       'https://firebasestorage.googleapis.com/v0/b/app-shoes-6fd12.appspot.com/o/ic_man_shirt.png?alt=media&token=ec71fd13-82d1-4f31-b863-f091f8f14ec8',
+//   },
+//   {
+//     id: '2',
+//     title: 'Man Work Equipment',
+//     imageURL:
+//       'https://firebasestorage.googleapis.com/v0/b/app-shoes-6fd12.appspot.com/o/ic_Man%20Work%20Equipment.png?alt=media&token=78574219-2cd5-4f4e-bf4f-25a079df3e0f',
+//   },
+//   {
+//     id: '3',
+//     title: 'Man Pants',
+//     imageURL:
+//       'https://firebasestorage.googleapis.com/v0/b/app-shoes-6fd12.appspot.com/o/ic_Man%20Pants.png?alt=media&token=9c973769-712f-4447-ad1e-9c6b7677c7b6',
+//   },
+//   {
+//     id: '4',
+//     title: 'Man Shoes',
+//     imageURL:
+//       'https://firebasestorage.googleapis.com/v0/b/app-shoes-6fd12.appspot.com/o/ic_Man%20Shoes.png?alt=media&token=f1bf8ed0-0637-48d9-93f2-3e754974c3cb',
+//   },
+//   {
+//     id: '5',
+//     title: 'Man Underwear',
+//     imageURL:
+//       'https://firebasestorage.googleapis.com/v0/b/app-shoes-6fd12.appspot.com/o/ic_Man%20Underwear.png?alt=media&token=9c2a1064-ab52-4d20-9d24-2c1a68547473',
+//   },
 
-  {
-    id: '6',
-    title: 'Dress',
-    imageURL:
-      'https://firebasestorage.googleapis.com/v0/b/app-shoes-6fd12.appspot.com/o/ic_Dress.png?alt=media&token=e19c2ce8-26c9-4b11-966a-509c96e5671f',
-  },
+//   {
+//     id: '6',
+//     title: 'Dress',
+//     imageURL:
+//       'https://firebasestorage.googleapis.com/v0/b/app-shoes-6fd12.appspot.com/o/ic_Dress.png?alt=media&token=e19c2ce8-26c9-4b11-966a-509c96e5671f',
+//   },
 
-  {
-    id: '7',
-    title: 'Woman Bag',
-    imageURL:
-      'https://firebasestorage.googleapis.com/v0/b/app-shoes-6fd12.appspot.com/o/ic_Woman%20Bag.png?alt=media&token=b34d5d98-6013-4fd8-b045-69017a941644',
-  },
+//   {
+//     id: '7',
+//     title: 'Woman Bag',
+//     imageURL:
+//       'https://firebasestorage.googleapis.com/v0/b/app-shoes-6fd12.appspot.com/o/ic_Woman%20Bag.png?alt=media&token=b34d5d98-6013-4fd8-b045-69017a941644',
+//   },
 
-  {
-    id: '8',
-    title: 'Woman Pants',
-    imageURL:
-      'https://firebasestorage.googleapis.com/v0/b/app-shoes-6fd12.appspot.com/o/ic_woman_pants.png?alt=media&token=a8a05a69-9756-4526-82b3-53419e90efb5',
-  },
+//   {
+//     id: '8',
+//     title: 'Woman Pants',
+//     imageURL:
+//       'https://firebasestorage.googleapis.com/v0/b/app-shoes-6fd12.appspot.com/o/ic_woman_pants.png?alt=media&token=a8a05a69-9756-4526-82b3-53419e90efb5',
+//   },
 
-  {
-    id: '9',
-    title: 'High Heels',
-    imageURL:
-      'https://firebasestorage.googleapis.com/v0/b/app-shoes-6fd12.appspot.com/o/ic_high_heel.png?alt=media&token=14f43a04-5f99-4375-9b77-ba8302774f1c',
-  },
+//   {
+//     id: '9',
+//     title: 'High Heels',
+//     imageURL:
+//       'https://firebasestorage.googleapis.com/v0/b/app-shoes-6fd12.appspot.com/o/ic_high_heel.png?alt=media&token=14f43a04-5f99-4375-9b77-ba8302774f1c',
+//   },
 
-  {
-    id: '10',
-    title: 'Bikini',
-    imageURL:
-      'https://firebasestorage.googleapis.com/v0/b/app-shoes-6fd12.appspot.com/o/ic_bikini.png?alt=media&token=fb81bb1a-bd01-4730-b1df-27239dcb232b',
-  },
-  {
-    id: '11',
-    title: 'Woman T-Shirt',
-    imageURL:
-      'https://firebasestorage.googleapis.com/v0/b/app-shoes-6fd12.appspot.com/o/ic_woman_tshirt.png?alt=media&token=038bc741-209d-452f-8261-35db3f557163',
-  },
-  {
-    id: '12',
-    title: 'Skirt',
-    imageURL:
-      'https://firebasestorage.googleapis.com/v0/b/app-shoes-6fd12.appspot.com/o/ic_shirt.png?alt=media&token=9464c2f1-34c9-474b-b34d-25ccb35675aa',
-  },
-];
+//   {
+//     id: '10',
+//     title: 'Bikini',
+//     imageURL:
+//       'https://firebasestorage.googleapis.com/v0/b/app-shoes-6fd12.appspot.com/o/ic_bikini.png?alt=media&token=fb81bb1a-bd01-4730-b1df-27239dcb232b',
+//   },
+//   {
+//     id: '11',
+//     title: 'Woman T-Shirt',
+//     imageURL:
+//       'https://firebasestorage.googleapis.com/v0/b/app-shoes-6fd12.appspot.com/o/ic_woman_tshirt.png?alt=media&token=038bc741-209d-452f-8261-35db3f557163',
+//   },
+//   {
+//     id: '12',
+//     title: 'Skirt',
+//     imageURL:
+//       'https://firebasestorage.googleapis.com/v0/b/app-shoes-6fd12.appspot.com/o/ic_shirt.png?alt=media&token=9464c2f1-34c9-474b-b34d-25ccb35675aa',
+//   },
+// ];

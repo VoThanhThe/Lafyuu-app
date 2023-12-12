@@ -6,9 +6,9 @@ const ItemGengerExplore = (props) => {
   return (
     <TouchableOpacity style = {styles.cotainer}>
       <View style = {styles.circle}>
-        <Image style = {styles.image} resizeMode='contain' source={{uri : dataIcon.imageURL}} />
+        <Image style = {styles.image} resizeMode='contain' source={{uri : dataIcon.image}} />
       </View>
-      <Text style = {styles.name}>{dataIcon.title}</Text>
+      <Text style = {styles.name}>{dataIcon.name}</Text>
     </TouchableOpacity>
   )
 }
@@ -18,7 +18,8 @@ export default ItemGengerExplore
 const styles = StyleSheet.create({
     cotainer: {
         width: '24%',
-        marginHorizontal: 1
+        marginHorizontal: "0.5%",
+        marginVertical: 4,
     },
    image: {
     width: 20,
