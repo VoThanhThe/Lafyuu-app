@@ -62,38 +62,54 @@ const Home = (props) => {
   }, []);
 
   return (
-    <View style={styles.container}>
+    < >
       {
         isLoading ? (
           <LoadingScreen />
         ) : (
-          <View>
+          <View style={styles.container}>
             {/* Start Header */}
             <View style={styles.groupHeader}>
-              <View style={styles.inputHeader}>
-                <TextInput style={styles.input} placeholder="Search Product" />
-                <Icon style={styles.icon} name="search" color="#40BFFF" size={20} />
-              </View>
-              <Icon1
+              <TouchableOpacity style={{
+                width: "80%",
+                height: 46,
+                backgroundColor: "red",
+                borderWidth: 1,
+                borderColor: '#EBF0FF',
+                backgroundColor: '#ffffff',
+                borderRadius: 5,
+                flexDirection: 'row',
+                alignItems: "center",
+                paddingHorizontal: 15
+              }}>
+                <Icon name="search" color="#40BFFF" size={20} />
+                <Text style={{ fontSize: 14, marginLeft: 15, color: "#9098B1", fontWeight: "400", letterSpacing: 0.5 }}>Search Product</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
                 onPress={() => {
                   {
                     navigation.navigate('FavoriteProduct');
                   }
-                }}
-                name="heart"
-                color="#9098B1"
-                size={20}
-              />
-              <Icon2
+                }}>
+                <Icon1
+                  name="heart"
+                  color="#9098B1"
+                  size={20}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
                 onPress={() => {
                   {
                     navigation.navigate('NotificationStack');
                   }
-                }}
-                name="notifications-outline"
-                color="#9098B1"
-                size={20}
-              />
+                }}>
+                <Icon2
+
+                  name="notifications-outline"
+                  color="#9098B1"
+                  size={20}
+                />
+              </TouchableOpacity>
             </View>
             {/* End Header */}
 
@@ -215,7 +231,7 @@ const Home = (props) => {
         )
       }
 
-    </View>
+    </>
   );
 };
 
@@ -260,9 +276,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     borderRadius: 5,
     paddingLeft: 50,
-  },
-  inputHeader: {
-    position: 'relative',
   },
   image: {
     width: '100%',

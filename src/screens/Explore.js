@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, TextInput, FlatList, Button, ScrollView } from 'react-native'
+import { StyleSheet, Text, View, Image, TextInput, FlatList, TouchableOpacity, ScrollView } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Icon1 from 'react-native-vector-icons/Feather'
@@ -52,14 +52,46 @@ const Explore = (props) => {
                         <View>
                             {/* Start Header */}
                             <View style={styles.groupHeader}>
-                                <View style={styles.inputHeader}>
-                                    <TextInput style={styles.input} placeholder='Search Product' />
-                                    <Icon style={styles.icon} name="search" color="#40BFFF" size={20} />
-                                </View>
+                                <TouchableOpacity style={{
+                                    width: "80%",
+                                    height: 46,
+                                    backgroundColor: "red",
+                                    borderWidth: 1,
+                                    borderColor: '#EBF0FF',
+                                    backgroundColor: '#ffffff',
+                                    borderRadius: 5,
+                                    flexDirection: 'row',
+                                    alignItems: "center",
+                                    paddingHorizontal: 15
+                                }}>
+                                    <Icon name="search" color="#40BFFF" size={20} />
+                                    <Text style={{ fontSize: 14, marginLeft: 15, color: "#9098B1", fontWeight: "400", letterSpacing: 0.5 }}>Search Product</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        {
+                                            navigation.navigate('FavoriteProduct');
+                                        }
+                                    }}>
+                                    <Icon1
+                                        name="heart"
+                                        color="#9098B1"
+                                        size={20}
+                                    />
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        {
+                                            navigation.navigate('NotificationStack');
+                                        }
+                                    }}>
+                                    <Icon2
 
-                                <Icon1 onPress={() => { { navigation.navigate('FavoriteProduct') } }} name="heart" color="#9098B1" size={20} />
-                                <Icon2 onPress={() => { { navigation.navigate('NotificationStack') } }} name="notifications-outline" color="#9098B1" size={20} />
-
+                                        name="notifications-outline"
+                                        color="#9098B1"
+                                        size={20}
+                                    />
+                                </TouchableOpacity>
                             </View>
                             {/* End Header */}
                             <ScrollView showsVerticalScrollIndicator={false}>

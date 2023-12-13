@@ -21,7 +21,7 @@ const FavoriteProduct = (props) => {
                             onPress={() => navigation.goBack()}
                             style={{ backgroundColor: "#40BFFF", width: '100%', height: 57, borderRadius: 5, marginTop: 16 }}
                         >
-                            <Text style={{ fontSize: 18, fontWeight: "700", color: "#ffffff", lineHeight: 57, textAlign: "center", }}>Back to Home</Text>
+                            <Text style={{ fontSize: 18, fontWeight: "700", color: "#ffffff", lineHeight: 57, textAlign: "center", }}>Go Back</Text>
                         </TouchableOpacity>
                     </View>)
                     :

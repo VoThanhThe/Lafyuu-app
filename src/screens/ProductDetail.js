@@ -77,12 +77,12 @@ const ProductDetail = (props) => {
 
   return (
 
-    <View style={styles.container}>
+    < >
       {
         isLoading ? (
           <LoadingScreen />
         ) : (
-          <View>
+          <View style={styles.container}>
             {/* Start Header */}
             <View style={styles.groupHeader}>
               <View style={{ flexDirection: 'row' }}>
@@ -90,7 +90,7 @@ const ProductDetail = (props) => {
                   <Ionicons name="chevron-back" color="#9098B1" size={20} />
                 </TouchableOpacity>
                 <Text style={styles.textHeader}>{
-                  data?.name.length > 30 ? (data?.name).slice(0,30) + "..." : data?.name
+                  data?.name.length > 30 ? (data?.name).slice(0, 30) + "..." : data?.name
                 }</Text>
               </View>
               <View style={{ flexDirection: 'row' }}>
@@ -247,18 +247,18 @@ const ProductDetail = (props) => {
                 />
                 {/* You Might Also Like */}
 
-                <TouchableOpacity style={styles.button}
-                  onPress={() => dispatch(addItemToCart(data))}
-                >
-                  <Text style={styles.textButton}>Add To Cart</Text>
-                </TouchableOpacity>
+
               </View>
             </ScrollView>
+            <TouchableOpacity style={styles.button}
+              onPress={() => dispatch(addItemToCart(data))}
+            >
+              <Text style={styles.textButton}>Add To Cart</Text>
+            </TouchableOpacity>
           </View>
         )
       }
-
-    </View >
+    </ >
 
 
   )
@@ -270,7 +270,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#ffffff',
-    paddingBottom: 25
+    paddingBottom: 70
   },
   groupTitle: {
     flexDirection: 'row',
@@ -385,14 +385,15 @@ const styles = StyleSheet.create({
     marginEnd: 12
   },
   button: {
-    width: '100%',
+   position: "absolute",
+   bottom: 16,
+   left: 16,
+   right: 16,
     height: 57,
     borderRadius: 5,
     backgroundColor: '#40BFFF',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 21,
-    marginBottom: 50
   },
   textButton: {
     fontSize: 14,

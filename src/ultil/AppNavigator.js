@@ -66,6 +66,18 @@ const HomeStack = () => {
   );
 };
 
+const ExploreStack = () => {
+  return (
+    <Stack.Navigator
+      initialRouteName="ExploreStack"
+      screenOptions={{headerShown: false}}>
+      <Stack.Screen name="ExploreStack" component={Explore} />
+      <Stack.Screen name="NotificationStack" component={NotificationStack} />
+      <Stack.Screen name="FavoriteProduct" component={FavoriteProduct} />
+    </Stack.Navigator>
+  );
+};
+
 const NotificationStack = () => {
   return (
     <Stack.Navigator
@@ -141,7 +153,7 @@ const BottomTab = () => {
         headerShown: false,
       })}>
       <Tab.Screen name="Home" component={HomeStack} title='Home' />
-      <Tab.Screen name="Explore" component={Explore} />
+      <Tab.Screen name="Explore" component={ExploreStack} />
       <Tab.Screen name="Cart" component={Cart} options={{tabBarBadge: cartData.length}} />
       <Tab.Screen
         name="OfferScreen"
