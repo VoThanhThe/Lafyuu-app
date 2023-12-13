@@ -24,6 +24,13 @@ const ItemCart = (props) => {
           setQuantity(quantity - 1);
         }
       };
+
+      const USD = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2
+    });
     
 
     const showConfirmDialog = () => {
@@ -71,7 +78,7 @@ const ItemCart = (props) => {
                         </TouchableOpacity>
                     </View>
                     <View style={styles.group_right_down}>
-                        <Text style={styles.textPrice}>${data.price}</Text>
+                        <Text style={styles.textPrice}>{USD.format(data.price)}</Text>
                         <View style={styles.group_button}>
                             <TouchableOpacity onPress={() => {decreaseQuantity()}}>
                                 <View style={styles.viewButtonQuantity}>

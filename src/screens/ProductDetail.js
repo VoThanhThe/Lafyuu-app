@@ -26,8 +26,14 @@ const ProductDetail = (props) => {
   const [selectedIdColor, setSelectedIdColor] = useState('1');
   const [isAddWishlist, setIsAddWishlist] = useState(false);
   const [dataProduct, setDataProduct] = useState([]);
-
   const dispatch = useDispatch();
+
+  const USD = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2
+});
 
   const itemWishlist = useSelector((state) => state.ReducersWishlist);
   console.log(itemWishlist);
@@ -143,7 +149,7 @@ const ProductDetail = (props) => {
                 {/* 5 Star */}
 
                 {/* Price */}
-                <Text style={styles.price}>${data.price}</Text>
+                <Text style={styles.price}>{USD.format(data.price)}</Text>
                 {/* Price */}
 
                 {/* Select Size */}
@@ -238,7 +244,7 @@ const ProductDetail = (props) => {
 
                 {/* You Might Also Like */}
                 <Text style={styles.titleItem}>You Might Also Like</Text>
-                <FlatList style={{ marginVertical: 12 }}
+                <FlatList style={{ marginVertical: 12, marginBottom: 80 }}
                   data={dataProduct}
                   renderItem={({ item }) => <ItemFlashSale data={item} navigation={navigation} />}
                   keyExtractor={item => item._id}
@@ -270,7 +276,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#ffffff',
-    paddingBottom: 70
   },
   groupTitle: {
     flexDirection: 'row',
@@ -290,7 +295,7 @@ const styles = StyleSheet.create({
     padding: 16,
     borderBottomColor: '#EBF0FF',
     borderBottomWidth: 1
-  },
+},
   textHeader: {
     fontSize: 16,
     fontWeight: '700',
@@ -314,14 +319,6 @@ const styles = StyleSheet.create({
     height: 8,
     borderRadius: 4,
     backgroundColor: '#EBF0FF',
-  },
-  groupHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: 16,
-    borderBottomColor: '#EBF0FF',
-    borderWidth: 1
   },
   groupStar: {
     flexDirection: 'row',

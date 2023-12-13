@@ -7,6 +7,13 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 
 const ItemProduct = (props) => {
     const { data, navigation } = props;
+
+    const USD = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2
+    });
     return (
         <View style={styles.container}>
             <TouchableOpacity
@@ -20,7 +27,7 @@ const ItemProduct = (props) => {
                     <Icon style={styles.icon} name="star" color="#FFC833" size={12} />
                     <Icon style={styles.icon} name="star" color="#EBF0FF" size={12} />
                 </View>
-                <Text style={styles.priceNew}>${data.price}</Text>
+                <Text style={styles.priceNew}>{USD.format(data.price)}</Text>
                 <View style={styles.groupView}>
                     <Text style={styles.priceOld}>$534,22</Text>
                     <Text style={styles.sale}>24% Off</Text>

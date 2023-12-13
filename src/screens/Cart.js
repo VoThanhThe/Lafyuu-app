@@ -11,7 +11,7 @@ import ItemCart from '../item_screen/ItemCart'
 import { useDispatch, useSelector } from 'react-redux'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 const Cart = (props) => {
-    const {navigation} = props;
+    const { navigation } = props;
     const cartData = useSelector(state => state.Reducers);
     console.log("Data List: ", cartData);
     console.log("Data length: ", cartData.length);
@@ -29,26 +29,30 @@ const Cart = (props) => {
     const totalPrice = () => {
         return tong + shipPrice + changesPrice;
     }
+    // Định dạng số tiền đô la
+    const USD = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2
+    });
 
-
-    //set data
-    // setQuantityProduct(cartData.length);
     return (
         <>
             {
-                cartData.length == 0 ? 
-                (<View style = {{flex: 1, backgroundColor: "#ffffff", justifyContent: "center", alignItems: 'center', paddingHorizontal: 16}}>
-                    <Ionicons name='close-circle' size={100} color={"#40BFFF"} />
-                    <Text style={{fontSize: 26, fontWeight: "700", color: "#223263", marginTop: 16}}>Product Not Found</Text>
-                    <Text style={{fontSize: 14, fontWeight: "400", color: "#9098B1", marginTop: 8}}>thank you for shopping using lafyuu</Text>
-                    <TouchableOpacity 
-                    onPress={() => navigation.navigate('Home')}
-                    style = {{backgroundColor: "#40BFFF", width: '100%', height: 57, borderRadius: 5, marginTop: 16}}
-                    >
-                        <Text style={{fontSize: 18, fontWeight: "700", color: "#ffffff", lineHeight: 57, textAlign: "center", }}>Back to Home</Text>
-                    </TouchableOpacity>
-                </View>) 
-                :
+                cartData.length == 0 ?
+                    (<View style={{ flex: 1, backgroundColor: "#ffffff", justifyContent: "center", alignItems: 'center', paddingHorizontal: 16 }}>
+                        <Ionicons name='close-circle' size={100} color={"#40BFFF"} />
+                        <Text style={{ fontSize: 26, fontWeight: "700", color: "#223263", marginTop: 16 }}>Product Not Found</Text>
+                        <Text style={{ fontSize: 14, fontWeight: "400", color: "#9098B1", marginTop: 8 }}>thank you for shopping using lafyuu</Text>
+                        <TouchableOpacity
+                            onPress={() => navigation.navigate('Home')}
+                            style={{ backgroundColor: "#40BFFF", width: '100%', height: 57, borderRadius: 5, marginTop: 16 }}
+                        >
+                            <Text style={{ fontSize: 18, fontWeight: "700", color: "#ffffff", lineHeight: 57, textAlign: "center", }}>Back to Home</Text>
+                        </TouchableOpacity>
+                    </View>)
+                    :
                     (
                         <View style={styles.container}>
                             {/* Start Header */}
@@ -56,7 +60,7 @@ const Cart = (props) => {
                                 <Text style={styles.header}>Your Cart</Text>
                             </View>
                             {/* End Header */}
-                            <ScrollView showsHorizontalScrollIndicator={false}>
+                            <ScrollView showsVerticalScrollIndicator={false}>
                                 <View style={{ paddingHorizontal: 16 }}>
                                     {
                                         cartData.map((item, index) => <ItemCart key={item._id} data={item} index={index} />)
@@ -69,10 +73,10 @@ const Cart = (props) => {
                                         </TouchableOpacity>
                                     </View>
 
-                                    <View style={{ padding: 16, borderWidth: 1, borderColor: '#EBF0FF', borderRadius: 5, marginTop: 16 }}>
+                                    <View style={{ padding: 16, borderWidth: 1, borderColor: '#EBF0FF', borderRadius: 5, marginTop: 16, marginBottom: 80 }}>
                                         <View style={[styles.viewFlex, { marginBottom: 12 }]}>
                                             <Text style={styles.textItemLeft}>Items ({cartData.length})</Text>
-                                            <Text style={styles.textItemRight}>${sumPrice(cartData)}</Text>
+                                            <Text style={styles.textItemRight}>{USD.format(sumPrice(cartData))}</Text>
                                         </View>
                                         <View style={[styles.viewFlex, { marginBottom: 12 }]}>
                                             <Text style={styles.textItemLeft}>Shipping</Text>
@@ -85,20 +89,21 @@ const Cart = (props) => {
                                         <View style={{ borderWidth: 1, borderStyle: 'dashed', borderColor: '#EBF0FF', marginBottom: 12 }}></View>
                                         <View style={[styles.viewFlex, {}]}>
                                             <Text style={[styles.textItemLeft, { fontWeight: '700', color: '#223263', }]}>Total Price</Text>
-                                            <Text style={[styles.textItemRight, { fontWeight: '700', color: '#40BFFF', }]}>${totalPrice()}</Text>
+                                            <Text style={[styles.textItemRight, { fontWeight: '700', color: '#40BFFF', }]}>{USD.format(totalPrice())}</Text>
                                         </View>
                                     </View>
 
-                                    <TouchableOpacity style={styles.buttonCheckOut}>
-                                        <Text style={styles.textButtonCheckOut}>Check Out</Text>
-                                    </TouchableOpacity>
+
                                 </View>
 
 
                             </ScrollView>
+                            <TouchableOpacity style={styles.buttonCheckOut}>
+                                <Text style={styles.textButtonCheckOut}>Check Out</Text>
+                            </TouchableOpacity>
                         </View>
                     )
-        }
+            }
         </>
 
     )
@@ -118,7 +123,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#ffffff',
-
     },
     header: {
         fontSize: 16,
@@ -254,13 +258,15 @@ const styles = StyleSheet.create({
         color: "#223263",
     },
     buttonCheckOut: {
-        width: "100%",
+        position: "absolute",
+        bottom: 16,
+        left: 16,
+        right: 16,
         height: 57,
         backgroundColor: '#40BFFF',
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 5,
-        marginVertical: 16,
     },
     textButtonCheckOut: {
         fontSize: 14,

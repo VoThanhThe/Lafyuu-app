@@ -3,12 +3,20 @@ import React from 'react'
 
 const ItemFlashSale = (props) => {
     const {data, navigation} = props;
+
+    const USD = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2
+    });
+
   return (
     <TouchableOpacity style = {styles.container}
     onPress={() => navigation.push('ProductDetail', {data})}> 
       <Image style = {styles.image} source={{uri : data.image}} resizeMode='contain'/>
       <Text style = {styles.title}>{data.name}</Text>
-      <Text style = {styles.priceNew}>${data.price}</Text>
+      <Text style = {styles.priceNew}>{USD.format(data.price)}</Text>
       <View style = {styles.groupView}>
         <Text style = {styles.priceOld}>$534,22</Text>
         <Text style = {styles.sale}>24% Off</Text>

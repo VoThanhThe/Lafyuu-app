@@ -14,6 +14,13 @@ const ItemFavoriteProduct = (props) => {
     const dispatch = useDispatch();
     const [showBox, setShowBox] = useState(true);
 
+    const USD = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2
+    });
+
     const showConfirmDialog = () => {
         return Alert.alert(
             "Are your sure?",
@@ -48,7 +55,7 @@ const ItemFavoriteProduct = (props) => {
                 <Icon style={styles.icon} name="star" color="#FFC833" size={12} />
                 <Icon style={styles.icon} name="star" color="#EBF0FF" size={12} />
             </View>
-            <Text style={styles.priceNew}>${dataProduct.price}</Text>
+            <Text style={styles.priceNew}>{USD.format(dataProduct.price)}</Text>
             <View style={styles.groupBottom}>
                 <View style={{
                     flexDirection: 'row',
