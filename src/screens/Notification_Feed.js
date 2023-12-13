@@ -14,7 +14,7 @@ const Notification_Feed = (props) => {
                     <TouchableOpacity onPress={() => { navigation.goBack() }}>
                         <Ionicons name="chevron-back" color="#9098B1" size={20} />
                     </TouchableOpacity>
-                    <Text style={styles.textHeader}>Notification</Text>
+                    <Text style={styles.textHeader}>Feed</Text>
                 </View>
 
             </View>

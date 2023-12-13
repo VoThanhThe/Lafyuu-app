@@ -8,6 +8,8 @@ import { AppContextProvider } from './src/ultil/AppContext';
 import { Provider } from 'react-redux';
 // import {store} from './src/redux2/stores/Stores';
 import {store} from './src/redux2/stores/Stores';
+import Search from './src/screens/Search';
+import ListCategory from './src/screens/ListCategory';
 
 const App = () => {
   return (

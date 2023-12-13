@@ -1,20 +1,18 @@
 import { StyleSheet, Text, View, Image, TextInput, FlatList, Pressable, ScrollView, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import SelectDropdown from 'react-native-select-dropdown'
-
-const gender = ["Male", "Female", "Other",]
-const countries = [
-    "Male", "Female", "Other",
-    
-];
-
+import { SelectList } from 'react-native-dropdown-select-list'
 
 const Gender = (props) => {
     const {navigation} = props;
+    const [selected, setSelected] = React.useState("");
+    const data = [
+        { key: '1', value: 'Male' },
+        { key: '2', value: 'Female' },
+    ]
     return (
         <View style={styles.container}>
             {/* Start Header */}
@@ -30,38 +28,13 @@ const Gender = (props) => {
             {/* End Header */}
             <View style={{ padding: 16 }}>
                 <Text style={styles.textItem}>Choose Gender</Text>
-                <SelectDropdown
-                    data={gender}
-                    // defaultValueByIndex={1}
-                    // defaultValue={'Egypt'}
-                    onSelect={(selectedItem, index) => {
-                        console.log(selectedItem, index);
-                    }}
-                    defaultButtonText={'Select Gender'}
-                    buttonTextAfterSelection={(selectedItem, index) => {
-                        return selectedItem;
-                    }}
-                    rowTextForSelection={(item, index) => {
-                        return item;
-                    }}
-                    buttonStyle={{width: '100%',borderRadius: 5, borderWidth: 1, borderColor: '#EBF0FF', backgroundColor: '#ffffff'}} 
-                    buttonTextStyle= {{textAlign: 'center'}}
-                    renderDropdownIcon={isOpened => {
-                        return <FontAwesome name={isOpened ? 'chevron-up' : 'chevron-down'} color={'#444'} size={18} />;
-                    }}
-                    dropdownIconPosition={'right'}
-                    dropdownStyle={styles.dropdown1DropdownStyle}
-                    rowStyle={styles.dropdown1RowStyle}
-                    rowTextStyle={styles.dropdown1RowTxtStyle}
-                    selectedRowStyle={styles.dropdown1SelectedRowStyle}
-                    search
-                    searchInputStyle={styles.dropdown1searchInputStyleStyle}
-                    searchPlaceHolder={'Search here'}
-                    searchPlaceHolderColor={'darkgrey'}
-                    renderSearchInputLeftIcon={() => {
-                        return <FontAwesome name={'search'} color={'#444'} size={18} />;
-                    }}
-                />
+                <SelectList
+                            setSelected={(val) => setSelected(val)}
+                            data={data}
+                            save="value"
+                            placeholder='Select Gender'
+                            searchPlaceholder='Search'
+                        />
                 
                 
 

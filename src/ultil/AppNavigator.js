@@ -26,7 +26,7 @@ import Change_Password from '../screens/Change_Password';
 import Order from '../screens/Order';
 import Address from '../screens/Address';
 import Add_Address from '../screens/Add_Address';
-import Add_Payment from '../screens/Add_Payment';
+import PaymentMethod from '../screens/PaymentMethod';
 import Add_Card from '../screens/Add_Card';
 import CreaditCardAndDebit from '../screens/CreaditCardAndDebit';
 
@@ -34,6 +34,8 @@ import Notification_Offer from '../screens/Notification_Offer';
 import Notification_Feed from '../screens/Notification_Feed';
 import Notification_Activity from '../screens/Notification_Activity';
 import { useSelector } from 'react-redux';
+import Search from '../screens/Search';
+import ListCategory from '../screens/ListCategory';
 
 
 
@@ -74,6 +76,8 @@ const ExploreStack = () => {
       <Stack.Screen name="ExploreStack" component={Explore} />
       <Stack.Screen name="NotificationStack" component={NotificationStack} />
       <Stack.Screen name="FavoriteProduct" component={FavoriteProduct} />
+      <Stack.Screen name="Search" component={Search} />
+      <Stack.Screen name="ListCategory" component={ListCategory} />
     </Stack.Navigator>
   );
 };
@@ -111,7 +115,7 @@ const AccountStack = () => {
       <Stack.Screen name="Order_Detail" component={Order_Detail} />
       <Stack.Screen name="Address" component={Address} />
       <Stack.Screen name="Add_Address" component={Add_Address} />
-      <Stack.Screen name="Add_Payment" component={Add_Payment} />
+      <Stack.Screen name="PaymentMethod" component={PaymentMethod} />
       <Stack.Screen name="Add_Card" component={Add_Card} />
       <Stack.Screen
         name="CreaditCardAndDebit"

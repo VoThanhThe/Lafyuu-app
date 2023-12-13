@@ -3,7 +3,7 @@ import React from 'react'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
-const Add_Payment = (props) => {
+const PaymentMethod = (props) => {
     const {navigation} = props;
     return (
         <View style={styles.container}>
@@ -20,7 +20,13 @@ const Add_Payment = (props) => {
             {/* End Header */}
             <TouchableOpacity onPress={() => {navigation.navigate('CreaditCardAndDebit')}}>
                 <View style={styles.groupItem}>
-                    <Ionicons name="card" color="#40BFFF" size={20} />
+                    <FontAwesome name="cc-mastercard" color="#40BFFF" size={20} />
+                    <Text style={styles.textItem}>International Card</Text>
+                </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => {navigation.navigate('CreaditCardAndDebit')}}>
+                <View style={styles.groupItem}>
+                    <FontAwesome name="credit-card" color="#40BFFF" size={20} />
                     <Text style={styles.textItem}>Credit Card And Debit</Text>
                 </View>
             </TouchableOpacity>
@@ -40,7 +46,7 @@ const Add_Payment = (props) => {
     )
 }
 
-export default Add_Payment
+export default PaymentMethod
 
 const styles = StyleSheet.create({
     container: {

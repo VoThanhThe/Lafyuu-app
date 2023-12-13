@@ -60,7 +60,7 @@ const Account = (props) => {
                         <Text style={styles.text}>Address</Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => {navigation.navigate('Add_Payment')}}>
+                <TouchableOpacity onPress={() => {navigation.navigate('PaymentMethod')}}>
                     <View style={{ padding: 16, flexDirection: 'row', alignItems: 'center' }}>
                         <Icon3 name="payment" color="#40BFFF" size={20} />
                         <Text style={styles.text}>Payment</Text>
