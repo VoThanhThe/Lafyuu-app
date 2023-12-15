@@ -19,7 +19,8 @@ const Cart = (props) => {
     var changesPrice = 128.00;
     var tong = 0;
     const sumPrice = (cartData) => {
-        for (let index = 0; index < cartData.length; index++) {
+        const cartDataLength = cartData.length;
+        for (let index = 0; index < cartDataLength; index++) {
             tong += cartData[index].price;
         }
         console.log("Tong;: ", tong)
@@ -98,7 +99,7 @@ const Cart = (props) => {
 
 
                             </ScrollView>
-                            <TouchableOpacity style={styles.buttonCheckOut}>
+                            <TouchableOpacity style={styles.buttonCheckOut} onPress={() => navigation.navigate("PaymentMethod")}>
                                 <Text style={styles.textButtonCheckOut}>Check Out</Text>
                             </TouchableOpacity>
                         </View>

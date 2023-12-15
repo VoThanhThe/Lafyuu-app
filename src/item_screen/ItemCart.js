@@ -14,14 +14,16 @@ const ItemCart = (props) => {
     const { data, index } = props;
     const [isAddWishlist, setIsAddWishlist] = useState(false);
     const [quantity, setQuantity] = useState(1);
-
+    const [price, setPrice] = useState(data.price);
     const increaseQuantity = () => {
         setQuantity(quantity + 1);
+        setPrice(price +  data.price);
       };
     
       const decreaseQuantity = () => {
         if (quantity > 1) {
           setQuantity(quantity - 1);
+          setPrice(price -  data.price);
         }
       };
 
@@ -78,7 +80,7 @@ const ItemCart = (props) => {
                         </TouchableOpacity>
                     </View>
                     <View style={styles.group_right_down}>
-                        <Text style={styles.textPrice}>{USD.format(data.price)}</Text>
+                        <Text style={styles.textPrice}>{USD.format(price)}</Text>
                         <View style={styles.group_button}>
                             <TouchableOpacity onPress={() => {decreaseQuantity()}}>
                                 <View style={styles.viewButtonQuantity}>

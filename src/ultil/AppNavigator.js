@@ -64,6 +64,8 @@ const HomeStack = () => {
       <Stack.Screen name="ProductDetail" component={ProductDetail} />
       <Stack.Screen name="NotificationStack" component={NotificationStack} />
       <Stack.Screen name="FavoriteProduct" component={FavoriteProduct} />
+      <Stack.Screen name="Search" component={Search} />
+      <Stack.Screen name="ListCategory" component={ListCategory} />
     </Stack.Navigator>
   );
 };
@@ -78,6 +80,18 @@ const ExploreStack = () => {
       <Stack.Screen name="FavoriteProduct" component={FavoriteProduct} />
       <Stack.Screen name="Search" component={Search} />
       <Stack.Screen name="ListCategory" component={ListCategory} />
+    </Stack.Navigator>
+  );
+};
+
+const CartStack = () => {
+  return (
+    <Stack.Navigator
+      initialRouteName="CartStack"
+      screenOptions={{headerShown: false}}>
+      <Stack.Screen name="CartStack" component={Cart} />
+      <Stack.Screen name="PaymentMethod" component={PaymentMethod} />
+      <Stack.Screen name="Add_Card" component={Add_Card} />
     </Stack.Navigator>
   );
 };
@@ -158,7 +172,7 @@ const BottomTab = () => {
       })}>
       <Tab.Screen name="Home" component={HomeStack} title='Home' />
       <Tab.Screen name="Explore" component={ExploreStack} />
-      <Tab.Screen name="Cart" component={Cart} options={{tabBarBadge: cartData.length}} />
+      <Tab.Screen name="Cart" component={CartStack} options={{tabBarBadge: cartData.length}} />
       <Tab.Screen
         name="OfferScreen"
         component={OfferScreen}

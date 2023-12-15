@@ -7,18 +7,17 @@ import { AppContextProvider } from './src/ultil/AppContext';
 
 import { Provider } from 'react-redux';
 // import {store} from './src/redux2/stores/Stores';
-import {store} from './src/redux2/stores/Stores';
-import Search from './src/screens/Search';
-import ListCategory from './src/screens/ListCategory';
+import { store } from './src/redux2/stores/Stores';
+const STRIPE_KEY = 'pk_test_51OAMNGANZv3Twwu9pzJzF1umKF8axh0rzphoESMxaGlGaIa0NDb1q4v18l8WugkxdR72EqNfzDrRKGr1VWv9N2Z400vuFz9UB4';
 
 const App = () => {
   return (
     <Provider store={store}>
-      <AppContextProvider>
-        <NavigationContainer>
-          <AppNavigator />
-        </NavigationContainer>
-      </AppContextProvider>
+        <AppContextProvider>
+          <NavigationContainer>
+            <AppNavigator />
+          </NavigationContainer>
+        </AppContextProvider>
     </Provider>
   );
 };
