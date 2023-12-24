@@ -1,37 +1,42 @@
 import { StyleSheet, Text, View, Image, TextInput, FlatList, Alert, ScrollView, TouchableOpacity } from 'react-native'
-import React, {useContext, useState} from 'react'
+import React, { useContext, useState } from 'react'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Icon1 from 'react-native-vector-icons/Feather'
 import Icon2 from 'react-native-vector-icons/Ionicons'
 import Icon3 from 'react-native-vector-icons/MaterialIcons'
 
 import { AppContext } from '../ultil/AppContext';
-
+import { useDispatch, useSelector } from 'react-redux'
+import { logoutUser } from '../redux2/actions/UserAction'
 
 const Account = (props) => {
-    const {navigation} = props;
+    const { navigation } = props;
     const { isLogin, setisLogin } = useContext(AppContext);
+    const dispatch = useDispatch();
+    const onLogout = () => {
+        setisLogin(false);
+        dispatch(logoutUser());
+    }
 
     const showConfirmDialog = () => {
         return Alert.alert(
-          "Are your sure?",
-          "Are you sure you want to Log out this application?",
-          [
-            // The "Yes" button
-            {
-              text: "Yes",
-              onPress: () => (
-                // setShowBox(false)
-                setisLogin(false)
-                
-              )
-            },
-            // The "No" button
-            // Does nothing but dismiss the dialog when tapped
-            {
-              text: "No",
-            },
-          ]
+            "Are your sure?",
+            "Are you sure you want to Log out this application?",
+            [
+                // The "Yes" button
+                {
+                    text: "Yes",
+                    onPress: () => (
+                        // setShowBox(false)
+                        onLogout()
+                    )
+                },
+                // The "No" button
+                // Does nothing but dismiss the dialog when tapped
+                {
+                    text: "No",
+                },
+            ]
         );
     }
     return (
@@ -42,25 +47,25 @@ const Account = (props) => {
             </View>
             {/* End Header */}
             <ScrollView showsHorizontalScrollIndicator={false}>
-                <TouchableOpacity onPress={() => {navigation.navigate('Profile')}}>
+                <TouchableOpacity onPress={() => { navigation.navigate('Profile') }}>
                     <View style={{ padding: 16, flexDirection: 'row', alignItems: 'center' }}>
                         <Icon name="user-o" color="#40BFFF" size={20} />
                         <Text style={styles.text}>Profile</Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => {navigation.navigate('Order')}}>
+                <TouchableOpacity onPress={() => { navigation.navigate('Order') }}>
                     <View style={{ padding: 16, flexDirection: 'row', alignItems: 'center' }}>
                         <Icon1 name="shopping-bag" color="#40BFFF" size={20} />
                         <Text style={styles.text}>Order</Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => {navigation.navigate('Address')}}>
+                <TouchableOpacity onPress={() => { navigation.navigate('Address') }}>
                     <View style={{ padding: 16, flexDirection: 'row', alignItems: 'center' }}>
                         <Icon2 name="ios-location-outline" color="#40BFFF" size={20} />
                         <Text style={styles.text}>Address</Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => {navigation.navigate('PaymentMethod')}}>
+                <TouchableOpacity onPress={() => { navigation.navigate('PaymentMethod') }}>
                     <View style={{ padding: 16, flexDirection: 'row', alignItems: 'center' }}>
                         <Icon3 name="payment" color="#40BFFF" size={20} />
                         <Text style={styles.text}>Payment</Text>

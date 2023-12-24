@@ -10,6 +10,7 @@ import React, { useState } from 'react'
 import ItemCart from '../item_screen/ItemCart'
 import { useDispatch, useSelector } from 'react-redux'
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import ProductNotFound from './404';
 const Cart = (props) => {
     const { navigation } = props;
     const cartData = useSelector(state => state.Reducers);
@@ -42,17 +43,9 @@ const Cart = (props) => {
         <>
             {
                 cartData.length == 0 ?
-                    (<View style={{ flex: 1, backgroundColor: "#ffffff", justifyContent: "center", alignItems: 'center', paddingHorizontal: 16 }}>
-                        <Ionicons name='close-circle' size={100} color={"#40BFFF"} />
-                        <Text style={{ fontSize: 26, fontWeight: "700", color: "#223263", marginTop: 16 }}>Product Not Found</Text>
-                        <Text style={{ fontSize: 14, fontWeight: "400", color: "#9098B1", marginTop: 8 }}>thank you for shopping using lafyuu</Text>
-                        <TouchableOpacity
-                            onPress={() => navigation.navigate('Home')}
-                            style={{ backgroundColor: "#40BFFF", width: '100%', height: 57, borderRadius: 5, marginTop: 16 }}
-                        >
-                            <Text style={{ fontSize: 18, fontWeight: "700", color: "#ffffff", lineHeight: 57, textAlign: "center", }}>Back to Home</Text>
-                        </TouchableOpacity>
-                    </View>)
+                    (
+                        <ProductNotFound navigation = {navigation} title = {"Back to Home"} />
+                    )
                     :
                     (
                         <View style={styles.container}>

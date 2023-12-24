@@ -103,7 +103,7 @@ const Explore = (props) => {
 
                                     <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
                                         {
-                                            dataCategoryMan.map((item) => <ItemGengerExplore key={item._id} dataIcon={item} />)
+                                            dataCategoryMan.map((item) => <ItemGengerExplore key={item._id} data={item} />)
                                         }
                                     </View>
 
@@ -111,7 +111,7 @@ const Explore = (props) => {
 
                                     <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
                                         {
-                                            dataCategoryWomen.map((item) => <ItemGengerExplore key={item._id} dataIcon={item} />)
+                                            dataCategoryWomen.map((item) => <ItemGengerExplore key={item._id} data={item} />)
                                         }
                                     </View>
                                 </View>

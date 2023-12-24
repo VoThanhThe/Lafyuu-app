@@ -1,14 +1,17 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
+import { useNavigation } from '@react-navigation/native';
 
 const ItemGengerExplore = (props) => {
-  const {dataIcon} = props;
+  const { data } = props;
+  const navigation = useNavigation()
   return (
-    <TouchableOpacity style = {styles.cotainer}>
-      <View style = {styles.circle}>
-        <Image style = {styles.image} resizeMode='contain' source={{uri : dataIcon.image}} />
+    <TouchableOpacity style={styles.cotainer}
+      onPress={() => navigation.navigate('SearchResult', { search: "", key: data._id, value: data.name })}>
+      <View style={styles.circle}>
+        <Image style={styles.image} resizeMode='contain' source={{ uri: data.image }} />
       </View>
-      <Text style = {styles.name}>{dataIcon.name}</Text>
+      <Text style={styles.name}>{data.name}</Text>
     </TouchableOpacity>
   )
 }
@@ -16,16 +19,16 @@ const ItemGengerExplore = (props) => {
 export default ItemGengerExplore
 
 const styles = StyleSheet.create({
-    cotainer: {
-        width: '24%',
-        marginHorizontal: "0.5%",
-        marginVertical: 4,
-    },
-   image: {
+  cotainer: {
+    width: '24%',
+    marginHorizontal: "0.5%",
+    marginVertical: 4,
+  },
+  image: {
     width: 20,
     height: 20,
-   },
-   circle:{
+  },
+  circle: {
     width: 80,
     height: 80,
     borderRadius: 50,
@@ -33,8 +36,8 @@ const styles = StyleSheet.create({
     borderColor: '#EBF0FF',
     justifyContent: 'center',
     alignItems: 'center'
-   },
-   name: {
+  },
+  name: {
     width: 70,
     height: 30,
     fontSize: 10,
@@ -43,6 +46,6 @@ const styles = StyleSheet.create({
     lineHeight: 15,
     textAlign: 'center',
     marginTop: 8
-   }
+  }
 
 })

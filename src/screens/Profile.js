@@ -1,12 +1,16 @@
 import { StyleSheet, Text, View, Image, TextInput, FlatList, Pressable, ScrollView, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Icon1 from 'react-native-vector-icons/Feather'
 import Icon2 from 'react-native-vector-icons/Ionicons'
 import Icon3 from 'react-native-vector-icons/MaterialIcons'
+import { useSelector } from 'react-redux';
+
 
 const Profile = (props) => {
     const { navigation } = props;
+    const user = useSelector(state => state.UserReducer.user);
+
     return (
         <View style={styles.container}>
             {/* Start Header */}
@@ -20,68 +24,56 @@ const Profile = (props) => {
 
             </View>
             {/* End Header */}
-            
+
             <View style={{ padding: 19 }}>
                 <View style={styles.viewFlex_1}>
-                <TouchableOpacity>
-                    <Image style={styles.image} source={require('../assets/img_profile.png')} />
+                    <TouchableOpacity>
+                        <Image style={styles.image} source={{uri: user.profile.avatar}} />
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => {navigation.navigate('Change_Name')}}>
-                    <View style={{ marginStart: 15 }}>
-                        <Text style={styles.textName}>Maximus Gold</Text>
-                        <Text style={styles.textEmail}>@derlaxy</Text>
-                    </View>
+                    <TouchableOpacity onPress={() => { navigation.navigate('Change_Name') }}>
+                        <View style={{ marginStart: 15 }}>
+                            <Text style={styles.textName}>{user.profile.name}</Text>
+                            <Text style={styles.textEmail}>{user.email}</Text>
+                        </View>
                     </TouchableOpacity>
                 </View>
-                <TouchableOpacity onPress={() => {navigation.navigate('Gender')}}>
+                <TouchableOpacity onPress={() => { navigation.navigate('Gender') }}>
                     <View style={[styles.viewFlex, { paddingVertical: 19 }]}>
                         <View style={styles.viewFlex_1}>
                             <Icon2 name="female" color="#40BFFF" size={18} />
                             <Text style={styles.textItem}>Gender</Text>
                         </View>
                         <View style={styles.viewFlex_1}>
-                            <Text style={styles.textNotify}>Male</Text>
+                            <Text style={styles.textNotify}>{user.profile.gender}</Text>
                             <Icon2 name="chevron-forward" color="#9098B1" size={20} />
                         </View>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => {navigation.navigate('BirthDay')}}>
+                <TouchableOpacity onPress={() => { navigation.navigate('BirthDay') }}>
                     <View style={[styles.viewFlex, { paddingVertical: 19 }]}>
                         <View style={styles.viewFlex_1}>
                             <Icon2 name="ios-calendar-sharp" color="#40BFFF" size={18} />
                             <Text style={styles.textItem}>Birthday</Text>
                         </View>
                         <View style={styles.viewFlex_1}>
-                            <Text style={styles.textNotify}>12-12-2000</Text>
+                            <Text style={styles.textNotify}>{user.profile.birthday}</Text>
                             <Icon2 name="chevron-forward" color="#9098B1" size={20} />
                         </View>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => {navigation.navigate('Email')}}>
-                    <View style={[styles.viewFlex, { paddingVertical: 19 }]}>
-                        <View style={styles.viewFlex_1}>
-                            <Icon2 name="mail-outline" color="#40BFFF" size={18} />
-                            <Text style={styles.textItem}>Email</Text>
-                        </View>
-                        <View style={styles.viewFlex_1}>
-                            <Text style={styles.textNotify}>Derlaxy@yahoo.com</Text>
-                            <Icon2 name="chevron-forward" color="#9098B1" size={20} />
-                        </View>
-                    </View>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => {navigation.navigate('Phone_Number')}}>
+                <TouchableOpacity onPress={() => { navigation.navigate('Phone_Number') }}>
                     <View style={[styles.viewFlex, { paddingVertical: 19 }]}>
                         <View style={styles.viewFlex_1}>
                             <Icon2 name="ios-phone-portrait-outline" color="#40BFFF" size={18} />
                             <Text style={styles.textItem}>Phone Number</Text>
                         </View>
                         <View style={styles.viewFlex_1}>
-                            <Text style={styles.textNotify}>(307) 555-0133</Text>
+                            <Text style={styles.textNotify}>{user.profile.phone}</Text>
                             <Icon2 name="chevron-forward" color="#9098B1" size={20} />
                         </View>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => {navigation.navigate('Change_Password')}}>
+                <TouchableOpacity onPress={() => { navigation.navigate('Change_Password') }}>
                     <View style={[styles.viewFlex, { paddingVertical: 19 }]}>
                         <View style={styles.viewFlex_1}>
                             <Icon2 name="lock-closed-outline" color="#40BFFF" size={18} />

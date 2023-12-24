@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Alert, TextInput, FlatList, TouchableOpacity, ScrollView } from 'react-native'
+import { StyleSheet, Text, View, Alert, TextInput, FlatList, TouchableOpacity, ScrollView, Button } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Icon1 from 'react-native-vector-icons/Feather'
@@ -7,118 +7,111 @@ import { SelectList } from 'react-native-dropdown-select-list'
 import ItemGengerExplore from '../item_screen/ItemGengerExplore'
 import AxiosIntance from '../ultil/AxiosIntance';
 import LoadingScreen from './LoadingScreen';
+import ItemSearch from '../item_screen/ItemSearch'
 
 const Search = (props) => {
-    const { navigation } = props;
-    const [dataCategory, setDataCategory] = useState([]);
+    const { navigation, route } = props;
+    const [dataProduct, setDataProduct] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [searchCateglory, setSearchCateglory] = useState(true);
-    const [selected, setSelected] = React.useState("");
-    console.log("Selected", selected);
+    const [inputValue, setInputValue] = useState("");
 
-    // const gender = ["Male", "Female", "Other",];
-    const gender = [
-        {
-            id: "1",
-            name: "Male",
-            status: "true",
-        },
-        {
-            id: "2",
-            name: "Female",
-            status: "true",
-        },
-    ];
+    const handleInputChange = (text) => {
+        setInputValue(text);
+    };
 
+    const handleClearInput = () => {
+        // Xóa giá trị của TextInput bằng cách đặt giá trị cho biến trạng thái về rỗng
+        setInputValue('');
+        console.log("Input: ", inputValue)
+    };
+    console.log("Input: ", inputValue)
+    // http://localhost:3000/api/product/search/name?keyword=nike&sort=-1
     useEffect(() => {
-        const getCategories = async () => {
-            const response = await AxiosIntance().get("/api/categories/get-all-categories");
-            console.log(response);
-            if (response.returnData.error == false) {
-                setDataCategory(response.categories);
-                setIsLoading(false);
-            } else {
-                console.log("Lấy dữ liệu thất bại");
-            }
+        if (inputValue.length > 0) {
+            countDownSearch();
+        } else if( inputValue.length == 0) {
+            setDataProduct([]);
         }
-        getCategories();
         return () => {
         }
-    }, []);
+    }, [inputValue]);
 
-    // Lấy thuộc tính "name" của đối tượng đầu tiên
-    let category = dataCategory.length > 0 ? dataCategory[0].name : "";
+    const search = async () => {
+        //http://localhost:3000/api/product/search/name?keyword=nike
+        const response = await AxiosIntance().get("/api/product/search/name?keyword=" + inputValue +"&sort=" + 1);
+        if (response.returnData.error == false) {
+            setDataProduct(response.products);
+            setIsLoading(false);
+        } else {
+            console.log("Lấy dữ liệu thất bại");
+        }
+    }
+    const onSearch = async () => {
+        navigation.navigate("SearchResult", { search: inputValue});
+    }
 
-    // Lọc ra chỉ các thuộc tính "_id" và "name" từ mỗi đối tượng
-    let filteredArray = dataCategory.map(obj => ({ key: obj._id, value: obj.name }));
+    let timeOut = null;
 
-    const handleResetSelection = () => {
-        // Cập nhật giá trị đã chọn về giá trị mặc định
-        setSelected('');
-        // Hiển thị thông báo hoặc thực hiện các hành động khác nếu cần thiết
-        Alert.alert('Selection Reset', 'Selected value has been reset to default.');
-      };
+    const countDownSearch = () => {
+        if (timeOut) {
+            clearTimeout(timeOut);
+        }
+        timeOut = setTimeout(() => {
+            search();
+        }, 0);
+    }
+
+
 
     return (
         <View style={styles.container}>
             {/* Start Header */}
             <View style={styles.groupHeader}>
-                <View style={styles.inputHeader}>
-                    <TextInput style={styles.input} placeholder="Search Product" autoFocus = {true} />
-                    <Icon style={styles.icon} name="search" color="#40BFFF" size={20} />
-                </View>
-
-                <TouchableOpacity>
-                    <Icon
-                        // sort-amount-asc
-                        name="sort-amount-desc"
-                        color="#9098B1"
-                        size={20}
-                    />
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <Icon2 name="chevron-back" color="#9098B1" size={20} />
                 </TouchableOpacity>
+                <View style={styles.inputHeader}>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Search Product"
+                        onChangeText={handleInputChange}
+                        value={inputValue}
+                        autoFocus={true} />
+                    <TouchableOpacity onPress={onSearch} style={styles.icon} >
+                        <Icon name="search" color="#40BFFF" size={20} />
+                    </TouchableOpacity>
+                    {
+                        inputValue.length == 0 ?
+                            (
+                                <TouchableOpacity style={{ position: 'absolute', top: 13, right: 18, display: 'none' }}>
+                                    <Icon2 name="close" color="#9098B1" size={20} />
+                                </TouchableOpacity>
+                            ) :
+                            (
+                                <TouchableOpacity onPress={handleClearInput} style={{ position: 'absolute', top: 13, right: 18, display: 'flex' }}>
+                                    <Icon2 name="close" color="#9098B1" size={20} />
+                                </TouchableOpacity>
+                            )
+                    }
+                </View>
                 <TouchableOpacity>
-                    <Icon1
-
-                        name="filter"
-                        color="#40BFFF"
-                        size={24}
-                    />
+                    <Icon2 name="mic-outline" color="#9098B1" size={24} />
                 </TouchableOpacity>
             </View>
             {/* End Header */}
             <View style={{ paddingHorizontal: 16 }}>
                 {/* Start Result */}
-                <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: 'center', marginTop: 16, }}>
-                    <View>
-                        <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#9098B1' }}>0 Result</Text>
-                    </View>
-                    {/* <TouchableOpacity
-                        onPress={() => navigation.navigate("ListCategory", { category: dataCategory._id})}
-                        style={{ flexDirection: "row", alignItems: "center" }}>
-                        <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#223263', marginEnd: 8 }}>{category}</Text>
-                        <Icon2 name='chevron-down' size={24} color={'#9098B1'} />
-                    </TouchableOpacity> */}
-                    <View style={{ width: 200, height: 48 }}>
-                        
-                    </View>
-                    <View style={{ position: "absolute", top: 0, right: 0, width: 200, zIndex: 1 }}>
-                        <SelectList
-                            setSelected={(val) => setSelected(val)}
-                            data={filteredArray}
-                            save="key"
-                            placeholder='Select Category'
-                            searchPlaceholder='Search'
-                            dropdownStyles={{backgroundColor: 'gray'}}
-                            dropdownTextStyles={{color: "white"}}
-                        />
-                    </View>
-
+                <View>
+                    <FlatList
+                        style={{ marginVertical: 12 }}
+                        data={dataProduct}
+                        renderItem={({ item }) => <ItemSearch data={item} navigation={navigation} />}
+                        keyExtractor={item => item._id}
+                        showsVerticalScrollIndicator={false}
+                    />
                 </View>
                 {/* End Result */}
             </View>
-            <TouchableOpacity style = {{width: 200, height: 58, backgroundColor: "yellow", padding: 16}} onPress={() => {handleResetSelection()}}>
-                <Text>Xóa bộ lọc</Text>
-            </TouchableOpacity>
         </View >
     )
 }
@@ -165,6 +158,11 @@ const styles = StyleSheet.create({
         backgroundColor: "#ffffff",
         borderRadius: 5,
         paddingLeft: 50,
+        paddingRight: 50,
+        fontSize: 14,
+        fontWeight: '700',
+        color: '#223263',
+        lineHeight: 18,
     },
     inputHeader: {
         position: 'relative',

@@ -33,7 +33,7 @@ const ProductDetail = (props) => {
     currency: 'USD',
     minimumFractionDigits: 0,
     maximumFractionDigits: 2
-});
+  });
 
   const itemWishlist = useSelector((state) => state.ReducersWishlist);
   console.log(itemWishlist);
@@ -81,6 +81,9 @@ const ProductDetail = (props) => {
     }
   }, []);
 
+  const onSearch = async () => {
+    navigation.navigate("SearchResult", { search: data.name, key: data.category._id, value: data.category.name });
+}
   return (
 
     < >
@@ -100,7 +103,9 @@ const ProductDetail = (props) => {
                 }</Text>
               </View>
               <View style={{ flexDirection: 'row' }}>
-                <Icon name="search" color="#9098B1" size={20} />
+                <TouchableOpacity onPress={onSearch}>
+                  <Icon name="search" color="#9098B1" size={20} />
+                </TouchableOpacity>
                 <Icon style={{ marginStart: 32.25 }} name="ellipsis-v" color="#9098B1" size={20} />
               </View>
             </View>
@@ -295,7 +300,7 @@ const styles = StyleSheet.create({
     padding: 16,
     borderBottomColor: '#EBF0FF',
     borderBottomWidth: 1
-},
+  },
   textHeader: {
     fontSize: 16,
     fontWeight: '700',
@@ -382,10 +387,10 @@ const styles = StyleSheet.create({
     marginEnd: 12
   },
   button: {
-   position: "absolute",
-   bottom: 16,
-   left: 16,
-   right: 16,
+    position: "absolute",
+    bottom: 16,
+    left: 16,
+    right: 16,
     height: 57,
     borderRadius: 5,
     backgroundColor: '#40BFFF',

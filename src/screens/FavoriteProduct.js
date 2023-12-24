@@ -4,6 +4,7 @@ import Icon2 from 'react-native-vector-icons/Ionicons'
 import ItemFavoriteProduct from '../item_screen/ItemFavoriteProduct'
 import { useSelector } from 'react-redux';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import ProductNotFound from './404';
 
 
 const FavoriteProduct = (props) => {
@@ -13,17 +14,9 @@ const FavoriteProduct = (props) => {
         <>
             {
                 data.length == 0 ?
-                    (<View style={{ flex: 1, backgroundColor: "#ffffff", justifyContent: "center", alignItems: 'center', paddingHorizontal: 16, }}>
-                        <Ionicons name='close-circle' size={100} color={"#40BFFF"} />
-                        <Text style={{ fontSize: 26, fontWeight: "700", color: "#223263", marginTop: 16 }}>Product Not Found</Text>
-                        <Text style={{ fontSize: 14, fontWeight: "400", color: "#9098B1", marginTop: 8 }}>thank you for shopping using lafyuu</Text>
-                        <TouchableOpacity
-                            onPress={() => navigation.goBack()}
-                            style={{ backgroundColor: "#40BFFF", width: '100%', height: 57, borderRadius: 5, marginTop: 16 }}
-                        >
-                            <Text style={{ fontSize: 18, fontWeight: "700", color: "#ffffff", lineHeight: 57, textAlign: "center", }}>Go Back</Text>
-                        </TouchableOpacity>
-                    </View>)
+                    (
+                        <ProductNotFound navigation = {navigation} title = {"Go Back"} />
+                    )
                     :
                     (
                         <View style={styles.container}>

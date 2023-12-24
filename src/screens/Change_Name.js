@@ -20,10 +20,8 @@ const Change_Name = (props) => {
             </View>
             {/* End Header */}
             <View style={{ padding: 16 }}>
-                <Text style={styles.textItem}>First Name</Text>
+                <Text style={styles.textItem}>Full Name</Text>
                 <TextInput style={styles.input} onChangeText={setfirstName} value={firstName}  />
-                <Text style={styles.textItem}>Last Name</Text>
-                <TextInput style={styles.input} onChangeText={setlastName} value={lastName} />
             </View>
         </View>
     )

@@ -36,6 +36,7 @@ import Notification_Activity from '../screens/Notification_Activity';
 import { useSelector } from 'react-redux';
 import Search from '../screens/Search';
 import ListCategory from '../screens/ListCategory';
+import SearchResult from '../screens/SearchResult';
 
 
 
@@ -65,6 +66,7 @@ const HomeStack = () => {
       <Stack.Screen name="NotificationStack" component={NotificationStack} />
       <Stack.Screen name="FavoriteProduct" component={FavoriteProduct} />
       <Stack.Screen name="Search" component={Search} />
+      <Stack.Screen name="SearchResult" component={SearchResult} />
       <Stack.Screen name="ListCategory" component={ListCategory} />
     </Stack.Navigator>
   );
@@ -79,6 +81,7 @@ const ExploreStack = () => {
       <Stack.Screen name="NotificationStack" component={NotificationStack} />
       <Stack.Screen name="FavoriteProduct" component={FavoriteProduct} />
       <Stack.Screen name="Search" component={Search} />
+      <Stack.Screen name="SearchResult" component={SearchResult} />
       <Stack.Screen name="ListCategory" component={ListCategory} />
     </Stack.Navigator>
   );

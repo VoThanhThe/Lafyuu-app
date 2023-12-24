@@ -1,16 +1,17 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
+import { useNavigation } from '@react-navigation/native';
 
 const ItemCategory = (props) => {
-  const {data, navigation} = props;
-
+  const { data } = props;
+  const navigation = useNavigation();
   return (
-    <TouchableOpacity style = {styles.cotainer} 
-    onPress={() => navigation.navigate('ProductDetail')}>
-      <View style = {styles.circle}>
-        <Image style = {styles.image} resizeMode='contain' source={{uri : data.image}} />
+    <TouchableOpacity style={styles.cotainer}
+      onPress={() => navigation.navigate('SearchResult', { search: "", key: data._id, value: data.name })}>
+      <View style={styles.circle}>
+        <Image style={styles.image} resizeMode='contain' source={{ uri: data.image }} />
       </View>
-      <Text style = {styles.name}>{data.name}</Text>
+      <Text style={styles.name}>{data.name}</Text>
     </TouchableOpacity>
   )
 }
@@ -18,16 +19,16 @@ const ItemCategory = (props) => {
 export default ItemCategory
 
 const styles = StyleSheet.create({
-    cotainer: {
-        width: 70,
-        height: 108,
-        marginRight: 12
-    },
-   image: {
+  cotainer: {
+    width: 70,
+    height: 108,
+    marginRight: 12
+  },
+  image: {
     width: 20,
     height: 20,
-   },
-   circle:{
+  },
+  circle: {
     width: 70,
     height: 70,
     borderRadius: 35,
@@ -35,8 +36,8 @@ const styles = StyleSheet.create({
     borderColor: '#EBF0FF',
     justifyContent: 'center',
     alignItems: 'center'
-   },
-   name: {
+  },
+  name: {
     width: 70,
     height: 30,
     fontSize: 10,
@@ -45,6 +46,6 @@ const styles = StyleSheet.create({
     lineHeight: 15,
     textAlign: 'center',
     marginTop: 8
-   }
+  }
 
 })

@@ -24,7 +24,7 @@ const Home = (props) => {
   const [dataProduct, setDataProduct] = useState([]);
   const [dataCategory, setDataCategory] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
+  
   const images = [
     require('../assets/img_bannel.png'),
     require('../assets/img_bannel_2.png'),
@@ -33,33 +33,42 @@ const Home = (props) => {
     require('../assets/banner_5.jpg'),
   ]
   useEffect(() => {
-    const getProducts = async () => {
-      const response = await AxiosIntance().get("/api/product");
-      console.log(response);
-      if (response.returnData.error == false) {
-        setDataProduct(response.products);
+    const fetchData = async () => {
+      try {
+        const [productsResponse, categoriesResponse] = await Promise.all([
+          AxiosIntance().get("/api/product"),
+          AxiosIntance().get("/api/categories/get-all-categories"),
+        ]);
+  
+        console.log("Products Response:", productsResponse);
+        console.log("Categories Response:", categoriesResponse);
+  
+        if (productsResponse.returnData.error === false) {
+          setDataProduct(productsResponse.products);
+        } else {
+          console.log("Lấy dữ liệu sản phẩm thất bại");
+        }
+  
+        if (categoriesResponse.returnData.error === false) {
+          setDataCategory(categoriesResponse.categories);
+        } else {
+          console.log("Lấy dữ liệu danh mục thất bại");
+        }
+  
         setIsLoading(false);
-      } else {
-        console.log("Lấy dữ liệu thất bại");
+      } catch (error) {
+        console.error("Error fetching data:", error);
       }
-    }
-
-    const getCategories = async () => {
-      const response = await AxiosIntance().get("/api/categories/get-all-categories");
-      console.log(response);
-      if (response.returnData.error == false) {
-        setDataCategory(response.categories);
-        setIsLoading(false);
-      } else {
-        console.log("Lấy dữ liệu thất bại");
-      }
-    }
-    getProducts();
-    getCategories();
+    };
+  
+    // Call the fetchData function to fetch data from both APIs
+    fetchData();
+  
     return () => {
-
-    }
+      // Cleanup logic if needed
+    };
   }, []);
+  
 
   return (
     < >
@@ -71,7 +80,7 @@ const Home = (props) => {
             {/* Start Header */}
             <View style={styles.groupHeader}>
               <TouchableOpacity
-              onPress={() => navigation.navigate("Search")}
+                onPress={() => navigation.navigate("Search")}
                 style={{
                   width: "80%",
                   height: 46,

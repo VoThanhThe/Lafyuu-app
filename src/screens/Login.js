@@ -15,10 +15,13 @@ import { AppContext } from '../ultil/AppContext';
 import { validaEmpty, validaEmail, validaPassword } from "../constants/validation";
 import AxiosIntance from '../ultil/AxiosIntance';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser } from '../redux2/actions/UserAction'
 
 const Login = (props) => {
   const { isLogin, setisLogin } = useContext(AppContext);
   const { navigation } = props;
+  const dispatch = useDispatch();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -54,8 +57,9 @@ const Login = (props) => {
       console.log(result);
       try {
         const response = await AxiosIntance().post("/api/user/login", { email: email, password: password });
-        console.log("Result: ",response);
+        console.log("Result: ", response);
         if (response.returnData.error == false) {
+          dispatch(loginUser(response.user));
           console.log(response.token);
           await AsyncStorage.setItem("token", response.token);
           ToastAndroid.show('Đăng nhập thành công!', ToastAndroid.SHORT);

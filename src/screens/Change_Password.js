@@ -6,9 +6,9 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather'
 
 const Change_Password = (props) => {
-    const [oldPassword, setoldPassword] = useState('•••••••••••••••••');
-    const [newPassword, setnewPassword] = useState('•••••••••••••••••');
-    const [newPasswordAgain, setnewPasswordAgain] = useState('•••••••••••••••••');
+    const [oldPassword, setoldPassword] = useState('');
+    const [newPassword, setnewPassword] = useState('');
+    const [newPasswordAgain, setnewPasswordAgain] = useState('');
     const {navigation} = props;
     return (
     <View style={styles.container}>
@@ -26,19 +26,19 @@ const Change_Password = (props) => {
     <View style={{ paddingHorizontal: 16 }}>
         <Text style={styles.textItem}>Old Password</Text>
         <View style={styles.inputHeader} >
-            <TextInput style={[styles.input]} onChangeText={setoldPassword} value={oldPassword}/>
+            <TextInput style={[styles.input]} secureTextEntry={true} onChangeText={setoldPassword} value={oldPassword} placeholder='Old Password'/>
             <Feather style={styles.icon} name="lock" color="#9098B1" size={20} />
         </View>
 
         <Text style={styles.textItem}>New Password</Text>
         <View style={styles.inputHeader} >
-            <TextInput style={[styles.input]} onChangeText={setnewPassword} value={newPassword}/>
+            <TextInput style={[styles.input]} secureTextEntry={true} onChangeText={setnewPassword} value={newPassword} placeholder='New Password'/>
             <Feather style={styles.icon} name="lock" color="#9098B1" size={20} />
         </View>
 
         <Text style={styles.textItem}>New Password Again</Text>
         <View style={styles.inputHeader} >
-            <TextInput style={[styles.input]} onChangeText={setnewPasswordAgain} value={newPasswordAgain}/>
+            <TextInput style={[styles.input]} secureTextEntry={true} onChangeText={setnewPasswordAgain} value={newPasswordAgain} placeholder='New Password Again'/>
             <Feather style={styles.icon} name="lock" color="#9098B1" size={20} />
         </View>
     </View>
